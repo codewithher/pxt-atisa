@@ -56,6 +56,7 @@ namespace pxsim {
 
             const pinList: number[] = []
             const servos: Map<number> = {}
+            const syntheticPins: Map<number> = {}
 
             function pinId(name: string) {
                 let key = getConfigKey("PIN_" + name)
@@ -65,7 +66,10 @@ namespace pxsim {
                 let m = /^P(\d+)$/.exec(name)
                 if (m)
                     return parseInt(m[1])
-                return null
+                // this happens when pins are defined in the bootloader
+                if (!syntheticPins[name])
+                    syntheticPins[name] = 100 + Object.keys(syntheticPins).length
+                return syntheticPins[name]
             }
 
             pinIds = {}
@@ -166,17 +170,47 @@ namespace pxsim {
             this.builtinVisuals["screen"] = () => new visuals.ScreenView();
             this.builtinPartVisuals["screen"] = (xy: visuals.Coord) => visuals.mkScreenPart(xy);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> dd55349 (Try to make the brain sim work with neopixels)
             this.neopixelPin = this.edgeConnectorState.getPin(getConfig(DAL.CFG_PIN_ONBOARD_DOTSTAR_DATA))
                 || this.edgeConnectorState.getPin(getConfig(DAL.CFG_PIN_ONBOARD_NEOPIXEL))
                 || this.edgeConnectorState.getPin(getConfig(DAL.CFG_PIN_DOTSTAR_DATA))
                 || this.edgeConnectorState.getPin(getConfig(DAL.CFG_PIN_NEOPIXEL));
 
+<<<<<<< HEAD
             if (!this.neopixelPin && (boardDefinition.visual as BoardImageDefinition)?.leds?.some(l => l.color == "neopixel"))
                 this.neopixelPin = this.edgeConnectorState.getPin(getConfig(DAL.CFG_PIN_LED_B))
 
             this.builtinParts["pixels"] = (pin: Pin) => { return this.neopixelState(!!this.neopixelPin && this.neopixelPin.id); };
             this.builtinVisuals["pixels"] = () => new visuals.NeoPixelView(parsePinString);
             this.builtinPartVisuals["pixels"] = (xy: visuals.Coord) => visuals.mkNeoPixelPart(xy);
+=======
+            this.builtinParts["pixels"] = (pin: Pin) => { return this.neopixelState(!!this.neopixelPin && this.neopixelPin.id); };
+            this.builtinVisuals["pixels"] = () => new visuals.NeoPixelView(parsePinString);
+            this.builtinPartVisuals["pixels"] = (xy: visuals.Coord) => visuals.mkNeoPixelPart(xy);
+        }
+
+        receiveMessage(msg: SimulatorMessage) {
+            super.receiveMessage(msg);
+            if (!runtime || runtime.dead) return;
+
+            switch (msg.type || "") {
+                case "eventbus":
+                    let ev = <SimulatorEventBusMessage>msg;
+                    this.bus.queue(ev.id, ev.eventid, ev.value);
+                    break;
+                case "serial":
+                    let data = (<SimulatorSerialMessage>msg).data || "";
+                    // TODO
+                    break;
+                case "irpacket":
+                    let irpacket = <SimulatorInfraredPacketMessage>msg;
+                    this.irState.receive(irpacket.packet);
+                    break;
+            }
+>>>>>>> dd55349 (Try to make the brain sim work with neopixels)
         }
 
         kill() {
