@@ -44,7 +44,7 @@ namespace pxsim {
         storageState: StorageState;
         thermometerState: AnalogSensorState;
         thermometerUnitState: TemperatureUnit;
-        microphoneState: AnalogSensorState;
+        microphoneState: MicrophoneState;
         screenState: ScreenState;
         irState: InfraredState;
         lcdState: LCDState;
@@ -56,9 +56,8 @@ namespace pxsim {
 
             const pinList: number[] = []
             const servos: Map<number> = {}
-            const syntheticPins: Map<number> = {}
 
-            function pinId(name: string): number {
+            function pinId(name: string) {
                 let key = getConfigKey("PIN_" + name)
                 if (key != null)
                     return getConfig(key)
@@ -66,16 +65,7 @@ namespace pxsim {
                 let m = /^P(\d+)$/.exec(name)
                 if (m)
                     return parseInt(m[1])
-                // this happens when pins are defined in the bootloader
-                if (!syntheticPins[name])
-                    syntheticPins[name] = 100 + Object.keys(syntheticPins).length
-                return syntheticPins[name]
-            }
-
-
-            function parsePinString(pinString: string): Pin {
-                const pinName = pinString && pxsim.readPin(pinString);
-                return pinName && pxtcore.getPin(pinId(pinName));
+                return null
             }
 
             pinIds = {}
@@ -113,19 +103,19 @@ namespace pxsim {
             }
 
             this.lightState = {};
-            this.microphoneState = new AnalogSensorState(DAL.DEVICE_ID_MICROPHONE, 52, 120, 75, 96);
+            this.microphoneState = new MicrophoneState(DAL.DEVICE_ID_MICROPHONE, 52, 120, 75, 96);
             this.storageState = new StorageState();
             this.lightSensorState = new AnalogSensorState(DAL.DEVICE_ID_LIGHT_SENSOR, 0, 255, 128 / 4, 896 / 4);
             this.thermometerState = new AnalogSensorState(DAL.DEVICE_ID_THERMOMETER, -20, 50, 10, 30);
             this.thermometerUnitState = TemperatureUnit.Celsius;
-            this.irState = new InfraredState();
+            this.irState = new InfraredState(this);
             this.lcdState = new LCDState();
             this.controlMessageState = new ControlMessageState(this);
             this.bus.setNotify(DAL.DEVICE_ID_NOTIFY, DAL.DEVICE_ID_NOTIFY_ONE);
 
             // TODO we need this.buttonState set for pxtcore.getButtonByPin(), but
             // this should be probably merged with buttonpair somehow
-            this.builtinParts["radio"] = this.radioState = new RadioState(runtime, {
+            this.builtinParts["radio"] = this.radioState = new RadioState(runtime, this, {
                 ID_RADIO: DAL.DEVICE_ID_RADIO,
                 RADIO_EVT_DATAGRAM: 1 /*DAL.DEVICE_RADIO_EVT_DATAGRAM*/
             });
@@ -140,7 +130,7 @@ namespace pxsim {
                 servos
             });
             this.builtinParts["microservo"] = this.edgeConnectorState;
-            this.builtinParts["accelerometer"] = this.accelerometerState = new AccelerometerState(runtime);;
+            this.builtinParts["accelerometer"] = this.accelerometerState = new AccelerometerState(runtime);
             this.builtinParts["screen"] = this.screenState = new ScreenState([], getConfig(DAL.CFG_DISPLAY_WIDTH) || 160, getConfig(DAL.CFG_DISPLAY_HEIGHT) || 128);
 
             this.builtinVisuals["buttons"] = () => new visuals.ButtonView();
@@ -176,35 +166,17 @@ namespace pxsim {
             this.builtinVisuals["screen"] = () => new visuals.ScreenView();
             this.builtinPartVisuals["screen"] = (xy: visuals.Coord) => visuals.mkScreenPart(xy);
 
-
             this.neopixelPin = this.edgeConnectorState.getPin(getConfig(DAL.CFG_PIN_ONBOARD_DOTSTAR_DATA))
                 || this.edgeConnectorState.getPin(getConfig(DAL.CFG_PIN_ONBOARD_NEOPIXEL))
                 || this.edgeConnectorState.getPin(getConfig(DAL.CFG_PIN_DOTSTAR_DATA))
                 || this.edgeConnectorState.getPin(getConfig(DAL.CFG_PIN_NEOPIXEL));
 
+            if (!this.neopixelPin && (boardDefinition.visual as BoardImageDefinition)?.leds?.some(l => l.color == "neopixel"))
+                this.neopixelPin = this.edgeConnectorState.getPin(getConfig(DAL.CFG_PIN_LED_B))
+
             this.builtinParts["pixels"] = (pin: Pin) => { return this.neopixelState(!!this.neopixelPin && this.neopixelPin.id); };
             this.builtinVisuals["pixels"] = () => new visuals.NeoPixelView(parsePinString);
             this.builtinPartVisuals["pixels"] = (xy: visuals.Coord) => visuals.mkNeoPixelPart(xy);
-        }
-
-        receiveMessage(msg: SimulatorMessage) {
-            super.receiveMessage(msg);
-            if (!runtime || runtime.dead) return;
-
-            switch (msg.type || "") {
-                case "eventbus":
-                    let ev = <SimulatorEventBusMessage>msg;
-                    this.bus.queue(ev.id, ev.eventid, ev.value);
-                    break;
-                case "serial":
-                    let data = (<SimulatorSerialMessage>msg).data || "";
-                    // TODO
-                    break;
-                case "irpacket":
-                    let irpacket = <SimulatorInfraredPacketMessage>msg;
-                    this.irState.receive(irpacket.packet);
-                    break;
-            }
         }
 
         kill() {
@@ -241,7 +213,6 @@ namespace pxsim {
             document.body.appendChild(this.view = this.viewHost.getView());
 
             this.accelerometerState.attachEvents(this.view);
-            this.radioState.addListeners();
 
             return Promise.resolve();
         }
@@ -285,5 +256,26 @@ namespace pxsim {
 
     if (!pxsim.initCurrentRuntime) {
         pxsim.initCurrentRuntime = initRuntimeWithDalBoard;
+    }
+
+    export function parsePinString(pinString: string): Pin {
+        const pinName = pinString && pxsim.readPin(pinString);
+        return pinName && pxtcore.getPin(pinIds[pinName]);
+    }
+
+    export namespace jacdac {
+        export function _setLedChannel(ch: number, val: number) {
+            const b = board() as DalBoard
+            if (b.neopixelPin) {
+                const state = b.neopixelState(b.neopixelPin.id);
+                state.mode = NeoPixelMode.RGB_RGB;
+                if (!state.buffer)
+                    state.buffer = new Uint8Array(3);
+                if (val > 0xffff) val = 0xffff;
+                if (val < 0) val = 0;
+                state.buffer[ch] = val >> 8;
+                runtime.updateDisplay();
+            }
+        }
     }
 }
