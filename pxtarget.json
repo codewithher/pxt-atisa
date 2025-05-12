@@ -129,6 +129,11 @@
         "parts": true,
         "partsAspectRatio": 0.69,
         "dynamicBoardDefinition": true,
+        "defaultBoard": {
+            "name": "Adafruit Trinket M0",
+            "url": "libs/adafruit-trinket-m0",
+            "variant": "samd21"
+        },
         "messageSimulators": {
             "jacdac": {
                 "url": "https://microsoft.github.io/jacdac-docs/tools/makecode-sim?webusb=0&parentOrigin=$PARENT_ORIGIN$",
@@ -420,8 +425,20 @@
         }
     },
     "appTheme": {
-        "accentColor": "#ecf0f1",
-        "backgroundColor": "#ffffff",
+        "accentColor": "#9370db",
+        "backgroundColor": "#e6e6ff",
+        "headerColor": "#9370db",
+        "headerHoverColor": "#7b68ee",
+        "buttonColor": "#9370db",
+        "buttonHoverColor": "#7b68ee",
+        "headerForeground": "#ffffff",
+        "headerForegroundHover": "#ffffff",
+        "editorBackground": "#f8f8ff",
+        "editorForeground": "#333333",
+        "menuHoverBackground": "#d8bfd8",
+        "menuHoverForeground": "#000000",
+        "linkColor": "#6a5acd",
+        "linkHoverColor": "#483d8b",
         "logoUrl": "https://github.com/microsoft/pxt-maker",
         "logo": "./static/logo.svg",
         "docsLogo": "./static/logo.svg",
@@ -440,10 +457,10 @@
         "feedbackUrl": "https://forum.makecode.com/",
         "betaUrl": "https://github.com/microsoft/pxt-maker",
         "boardName": "board",
-        "homeScreenHero": "./static/hero.jpg",
+        "homeScreenHero": "./static/code-with-her.jpg",
         "debugger": true,
         "print": true,
-        "chooseBoardOnNewProject": true,
+        "chooseBoardOnNewProject": false,
         "lightToc": true,
         "instructions": true,
         "docMenu": [
