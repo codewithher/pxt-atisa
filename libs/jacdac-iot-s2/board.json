@@ -1,0 +1,43 @@
+{
+  "driveDisplayName": "IOT-BOOT",
+  "visual": {
+    "image": "pkg://board.svg",
+    "useCrocClips": false,
+    "width": 281,
+    "height": 182,
+    "pinDist": 15,
+    "pinBlocks": [],
+    "leds": [
+      {
+        "x": 70,
+        "y": 90,
+        "w": 5,
+        "h": 5,
+        "color": "neopixel",
+        "label": "NEOPIXEL"
+      }
+    ],
+    "touchPads": [],
+    "buttons": [],
+    "reset": {
+      "x": 197,
+      "y": 163,
+      "w": 15,
+      "h": 15
+    }
+  },
+  "gpioPinMap": {},
+  "groundPins": [],
+  "threeVoltPins": [],
+  "i2cPins": {},
+  "onboardComponents": [
+    "pixel"
+  ],
+  "marginWhenBreadboarding": [
+    0,
+    0,
+    80,
+    0
+  ],
+  "spiPins": {}
+}
