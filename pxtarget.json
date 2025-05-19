@@ -6,6 +6,7 @@
     "title": "MakeCode Maker - Blocks / Javascript editor",
     "description": "A Blocks / JavaScript code editor for MakeCode Maker Boards",
     "corepkg": "core",
+    "cloud": true,
     "bundleddirs": [
         "libs/base",
         "libs/base---light",
@@ -140,15 +141,45 @@
     },
     "cloud": {
         "workspace": false,
-        "packages": true,
         "sharing": true,
         "thumbnails": true,
-        "publishing": true,
         "importing": true,
-        "preferredPackages": [],
+        "packages": true,
+        "publishing": true,
         "githubPackages": true,
+        "showBadges": true,
         "cloudProviders": {
-            "github": {}
+            "github": {
+                "id": "github",
+                "name": "GitHub",
+                "icon": "/static/providers/github-mark.png",
+                "identity": false,
+                "order": 4
+            },
+            "microsoft": {
+                "id": "microsoft",
+                "name": "Microsoft",
+                "icon": "/static/providers/microsoft-logo.svg",
+                "identity": true,
+                "redirect": true,
+                "order": 1
+            },
+            "google": {
+                "id": "google",
+                "name": "Google",
+                "icon": "/static/providers/google-logo.svg",
+                "identity": true,
+                "redirect": true,
+                "order": 2
+            },
+            "clever": {
+                "id": "clever",
+                "name": "Clever",
+                "icon": "/static/providers/clever-logo.png",
+                "identity": true,
+                "redirect": true,
+                "order": 3
+            }
         }
     },
     "runtime": {
