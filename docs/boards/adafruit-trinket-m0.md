@@ -2,7 +2,8 @@
 
 ```sim
 forever(function() {
-
+    // this is a comment
+    pixel.setColor(0x00ff00)
 })
 ```
 

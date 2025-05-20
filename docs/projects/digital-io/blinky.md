@@ -6,9 +6,10 @@ Turn on and off the light pin to create a blinking effect.
 
 ![A breadboard with a blinking LED](/static/projects/digital-io/blinky/gallery.gif)
 
+<!-- template is what starter code is -->
 ```template
 forever(function() {
-    
+    pins.D13.digitalWrite(true)
 })
 ```
 
