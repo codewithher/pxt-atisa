@@ -32,3 +32,7 @@ lib/
 _locales
 
 **/*.DS_Store
+
+# TypeScript declarations and npm lock file
+*.d.ts
+package-lock.json
