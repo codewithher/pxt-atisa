@@ -1,8 +1,0 @@
-toc:
-  - title: My Gallery
-    path: /boards/my-gallery
-    icon: home
-    items:
-      - title: Overview
-        path: /boards/my-gallery
-        icon: home
