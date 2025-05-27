@@ -8,13 +8,13 @@ Turn on and off the light pin to create a blinking effect.
 
 ```template
 forever(function() {
-    
+
 })
 ```
 
 ## Step 1 @fullscreen
 
-Add a ``||pins:digital write||`` to turn the ``D0`` pin ``LOW``.
+Add a `||pins:digital write||` to turn the `D0` pin `LOW`.
 
 ```blocks
 forever(function() {
@@ -30,7 +30,7 @@ Take a peek at the simulator and make sure the LED is turned off.
 
 ## Step 3 @fullscreen
 
-Add another ``||blocks:pause||`` and ``||pins:digital write||`` to create a blinking effect.
+Add another `||blocks:pause||` and `||pins:digital write||` to create a blinking effect.
 Make sure the digital write is **HIGH**.
 
 ```blocks
@@ -38,7 +38,7 @@ forever(function() {
     pins.D0.digitalWrite(false)
     pause(500)
     pins.D0.digitalWrite(true)
-    pause(500)    
+    pause(500)
 })
 ```
 
@@ -46,9 +46,9 @@ Play with the duration in your pauses to create different patterns.
 
 ## Step 4 @fullscreen
 
-Look at the simulator and make sure your program works as expected. 
+Look at the simulator and make sure your program works as expected.
 
-If you have a @boardname@, press ``|Download|`` and follow the instruction to get your code on your device.
+If you have a @boardname@, press `|Download|` and follow the instruction to get your code on your device.
 
 Click on the **wrench** icon under the simulator to get detailed breadboarding instructions.
 
