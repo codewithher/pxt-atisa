@@ -45,7 +45,7 @@
     "dependencies": {
         "pxt-common-packages": "12.3.30",
         "pxt-core": "11.4.7", 
-        "webusb": "^1.1.1"
+        "usb": "^2.15.0"
     },
     "scripts": {
         "test": "node node_modules/pxt-core/built/pxt.js travis",
