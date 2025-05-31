@@ -39,16 +39,24 @@
         "@types/marked": "^0.3.0",
         "@types/node": "^9.3.0",
         "@types/web-bluetooth": "0.0.4",
+        "chai": "^5.2.0",
+        "chai-as-promised": "^8.0.1",
+        "chai-webdriver": "^1.2.3",
+        "mocha": "^11.5.0",
+        "selenium-webdriver": "^4.33.0",
         "semantic-ui-less": "2.4.1",
         "typescript": "4.8.3"
     },
     "dependencies": {
         "pxt-common-packages": "12.3.30",
-        "pxt-core": "11.4.7", 
+        "pxt-core": "11.4.7",
         "usb": "^2.15.0"
     },
     "scripts": {
-        "test": "node node_modules/pxt-core/built/pxt.js travis",
-        "svgo": "glob-exec --foreach \"**/boardhd.svg\" -- \"svgo --config=svgo.yml {{file}} -o {{file.dir}}/board.svg \""
+        "test": "mocha test/test.js",
+        "webdriver-test": "mocha test/webdriver-test.js",
+        "svgo": "glob-exec --foreach \"**/boardhd.svg\" -- \"svgo --config=svgo.yml {{file}} -o {{file.dir}}/board.svg \"",
+        "e2e": "node test/e2e/run-tests.js",
+        "e2e:watch": "node test/e2e/run-tests.js --watch"
     }
 }
