@@ -23,6 +23,12 @@ jobs:
         run: |
           sudo npm install -g pxt
           npm install
+      - name: Start PXT server
+        run: |
+          nohup pxt serve &
+          sleep 5  # Wait for server to start
+        env:
+          CI: true
       - name: Run unit tests
         run: npm run test:unit
       - name: Run E2E tests
