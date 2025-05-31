@@ -1,4 +1,5 @@
 const { Builder, By, until } = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
 const chai = require('chai');
 const expect = chai.expect;
 
@@ -8,8 +9,16 @@ const SHORT_TIMEOUT = 5000; // 5 seconds
 let driver;
 
 before(async () => {
+    const options = new chrome.Options();
+    if (process.env.CI) {
+        options.addArguments('--headless=new');
+        options.addArguments('--no-sandbox');
+        options.addArguments('--disable-dev-shm-usage');
+    }
+    
     driver = await new Builder()
         .forBrowser('chrome')
+        .setChromeOptions(options)
         .build();
 });
 

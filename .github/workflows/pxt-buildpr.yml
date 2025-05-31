@@ -21,12 +21,16 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: npm install
         run: |
-          sudo apt-get install xvfb
           sudo npm install -g pxt
           npm install
+      - name: Run unit tests
+        run: npm run test:unit
+      - name: Run E2E tests
+        run: npm run test:e2e
+        env:
+          CI: true
       - name: pxt ci
-        run: |
-          pxt ci
+        run: pxt ci
         env:
           CHROME_BIN: chromium-browser
           DISPLAY: :99.0
