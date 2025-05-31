@@ -53,10 +53,10 @@
         "usb": "^2.15.0"
     },
     "scripts": {
-        "test": "mocha test/test.js",
-        "webdriver-test": "mocha test/webdriver-test.js",
-        "svgo": "glob-exec --foreach \"**/boardhd.svg\" -- \"svgo --config=svgo.yml {{file}} -o {{file.dir}}/board.svg \"",
-        "e2e": "node test/e2e/run-tests.js",
-        "e2e:watch": "node test/e2e/run-tests.js --watch"
+        "test": "mocha test/features/**/*.test.js",
+        "test:unit": "mocha test/features/**/unit.test.js",
+        "test:e2e": "mocha test/features/**/e2e.test.js",
+        "test:feature": "mocha test/features/${FEATURE}/**/*.test.js",
+        "svgo": "glob-exec --foreach \"**/boardhd.svg\" -- \"svgo --config=svgo.yml {{file}} -o {{file.dir}}/board.svg \""
     }
 }
