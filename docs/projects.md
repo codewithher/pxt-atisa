@@ -1,3 +1,7 @@
+<!-- This file is generated from targetconfig.json. Do not edit. -->
+
+
+
 # Projects
 
 ```codecard
@@ -151,4 +155,3 @@
 [Power](/projects/power),
 [Bit Radio](/projects/radio),
 [Boards](/boards)
-
