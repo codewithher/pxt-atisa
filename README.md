@@ -95,8 +95,8 @@ the ``file:...`` path instead of ``*``
 
 ```
    dependencies: {
-        "adafruit-metro-m0-express": "file:../../libs/adafruit-metro-m0-express"
-   }
+        "adafruit-trinket-m0": "file:../../libs/adafruit-trinket-m0"
+    }
 ```
 * from the command line, set the ``PXT_NODOCKER`` environment variable to ``1``
 

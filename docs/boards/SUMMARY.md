@@ -1,16 +1,7 @@
 # Boards
 
 * [Adafruit](/boards/adafruit)
-    * [Metro M0 Express](/boards/adafruit-metro-m0-express)
-    * [Feather M0 Express](/boards/adafruit-feather-m0-express)
-    * [ItsyBitsy M0 Express](/boards/adafruit-itsybitsy-m0-express)
     * [Trinket M0](/boards/adafruit-trinket-m0)
-    * [Metro M4 Express](/boards/adafruit-metro-m4-express)
-    * [Feather M4 Express](/boards/adafruit-feather-m4-express)
-    * [ItsyBitsy M4 Express](/boards/adafruit-itsybitsy-m4-express)
-    * [Feather Bluefruit NRF52840](/boards/adafruit-feather-nrf52840-express)
-    * [ItsyBitsy nrf52840 Express](/boards/adafruit-itsybitsy-nrf52840-express)
-    * [Circuit Playground Bluefruit](/boards/adafruit-circuit-playground-bluefruit)
 * [SparkFun](/boards/sparkfun)
     * [RedBoard Turbo](/boards/sparkfun-redboard-turbo)
     * [LumiDrive](/boards/sparkfun-lumidrive)

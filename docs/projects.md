@@ -14,7 +14,7 @@
     {
         "name": "Adafruit",
         "url": "/boards/adafruit",
-        "imageUrl": "/static/libs/adafruit-metro-m0-express.jpg"
+        "imageUrl": "/static/libs/adafruit-trinket-m0.jpg"
     },
     {
         "name": "Arduino",
