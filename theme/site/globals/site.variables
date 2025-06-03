@@ -9,8 +9,8 @@
 @emSize      : 14px;
 @fontSize    : 13px;
 
-@primaryColor: #6a5acd;
-@secondaryColor: #9370db;
+@primaryColor: #2f2f2f;
+@secondaryColor: @blue;
 
 @red:#CC2936;
 @yellow:#FFC914;
@@ -27,7 +27,7 @@
 @purple:#8073E5;
 @orange:#FFA702;
 
-@pageBackground: #e6e6ff;
+@pageBackground: #ecf0f1;
 @serialTextColor: #333;
 
 /*******************************

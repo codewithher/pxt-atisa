@@ -1,8 +1,0 @@
-toc:
-  - title: My Gallery
-    path: /projects/my-gallery
-    icon: home
-    items:
-      - title: Overview
-        path: /projects/my-gallery
-        icon: home
