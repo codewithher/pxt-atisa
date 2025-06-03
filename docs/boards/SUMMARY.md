@@ -5,7 +5,6 @@
     * [Feather M0 Express](/boards/adafruit-feather-m0-express)
     * [ItsyBitsy M0 Express](/boards/adafruit-itsybitsy-m0-express)
     * [Trinket M0](/boards/adafruit-trinket-m0)
-    * [Gemma M0](/boards/adafruit-gemma-m0)
     * [Metro M4 Express](/boards/adafruit-metro-m4-express)
     * [Feather M4 Express](/boards/adafruit-feather-m4-express)
     * [ItsyBitsy M4 Express](/boards/adafruit-itsybitsy-m4-express)

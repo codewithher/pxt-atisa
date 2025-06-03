@@ -35,13 +35,6 @@
 * cardType: template
 * imageUrl: /static/libs/adafruit-trinket-m0.jpg
 
----
-
-* name: Adafruit Gemma M0
-* url: /boards/adafruit-gemma-m0
-* cardType: template
-* imageUrl: /static/libs/adafruit-gemma-m0.jpg
-
 ### ~
 
 
