@@ -2,11 +2,6 @@
 
 * [Adafruit](/boards/adafruit)
     * [Trinket M0](/boards/adafruit-trinket-m0)
-* [SparkFun](/boards/sparkfun)
-    * [RedBoard Turbo](/boards/sparkfun-redboard-turbo)
-    * [LumiDrive](/boards/sparkfun-lumidrive)
-    * [SAMD21 Dev Breakout](/boards/sparkfun-samd21-dev-breakout)
-    * [SAMD21 Mini Breakout](/boards/sparkfun-samd21-mini-breakout)
 * [XinaBox](/boards/xinabox)
     * [XinaBox CC03](/boards/xinabox-cc03)
     * [XinaBox CS11](/boards/xinabox-cs11)

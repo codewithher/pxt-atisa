@@ -73,11 +73,6 @@ They do not have a color RGB.
 * [with 900Mhz Radio](https://www.adafruit.com/product/3178); also other radios available
 * [Express for Python](https://www.adafruit.com/product/3403) with SPI Flash
 
-### Sparkfun
-
-* [SAMD21 Mini Breakout](https://www.sparkfun.com/products/13664) - small
-* [SAMD21 Dev Breakout](https://www.sparkfun.com/products/13672) - Uno layout
-
 ### Arduino
 
 These three have Uno layout. The last two have on-board debugger (we could use it

@@ -18,11 +18,6 @@ This editor supports various maker boards, based on SAMD21, SAMD51, NRF52.
 
 ---
 
-* name: Sparkfun
-* url: /boards/sparkfun
-* imageUrl: /static/libs/sparkfun-samd21-dev-breakout.jpg
-
----
 
 * name: XinaBox
 * url: /boards/xinabox
@@ -46,7 +41,6 @@ This editor supports various maker boards, based on SAMD21, SAMD51, NRF52.
 ## See Also
 
 [Adafruit](/boards/adafruit),
-[Sparkfun](/boards/sparkfun),
 [Arduino](/boards/arduino),
 [Misc](/boards/misc),
 [Add a new board](/boards/add-a-new-board)

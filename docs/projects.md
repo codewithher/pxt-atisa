@@ -19,11 +19,6 @@
         "imageUrl": "/static/libs/arduino-mkr1000.jpg"
     },
     {
-        "name": "SparkFun",
-        "url": "/boards/sparkfun",
-        "imageUrl": "/static/libs/sparkfun-redboard-turbo.jpg"
-    },
-    {
         "name": "XinaBox",
         "url": "/boards/xinabox",
         "imageUrl": "/static/libs/xinabox-cc03.jpg"
@@ -133,7 +128,6 @@
 
 [Adafruit](/boards/adafruit),
 [Arduino](/boards/arduino),
-[SparkFun](/boards/sparkfun),
 [XinaBox](/boards/xinabox),
 [Misc](/boards/misc),
 [Digital IO](/projects/digital-io),
