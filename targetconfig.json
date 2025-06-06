@@ -41,7 +41,6 @@
   },
   "galleries": {
     "Adafruit": "/boards/adafruit",
-    "Misc": "/boards/misc",
     "Digital IO": "/projects/digital-io",
     "Analog IO": "/projects/analog-io",
     "Pixel": "/projects/pixel",

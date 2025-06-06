@@ -12,11 +12,6 @@
         "imageUrl": "/static/libs/adafruit-trinket-m0.jpg"
     },
     {
-        "name": "Misc",
-        "url": "/boards/misc",
-        "imageUrl": "/static/libs/robotics-masters-robohatmm1-m4.jpg"
-    },
-    {
         "name": "Digital IO",
         "url": "/projects/digital-io",
         "imageUrl": "/static/projects/digital-io/blinky/gallery.png",
@@ -114,7 +109,6 @@
 ## See Also
 
 [Adafruit](/boards/adafruit),
-[Misc](/boards/misc),
 [Digital IO](/projects/digital-io),
 [Analog IO](/projects/analog-io),
 [Pixel](/projects/pixel),
