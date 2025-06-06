@@ -2,7 +2,6 @@
   "packages": {
     "approvedOrgs": ["Microsoft"],
     "approvedRepos": [
-      "microsoft/pxt-jacdac",
       "microsoft/pxt-ml4f",
       "Adafruit/pxt-crickit",
       "Adafruit/pxt-seesaw",
@@ -11,7 +10,6 @@
       "ElectronicCats/pxt-lora"
     ],
     "preferredRepos": [
-      "microsoft/pxt-jacdac",
       "Adafruit/pxt-crickit",
       "Adafruit/pxt-seesaw",
       "ElectronicCats/pxt-bme280",
@@ -23,9 +21,6 @@
       "https://microsoft.github.io/ml4f/"
     ],
     "approvedRepoLib": {
-      "microsoft/pxt-jacdac": {
-        "preferred": true
-      },
       "microsoft/pxt-ml4f": {},
       "adafruit/pxt-crickit": {
         "preferred": true
@@ -45,7 +40,6 @@
     }
   },
   "galleries": {
-    "Jacdac": "/boards/jacdac",
     "Adafruit": "/boards/adafruit",
     "Arduino": "/boards/arduino",
     "SparkFun": "/boards/sparkfun",

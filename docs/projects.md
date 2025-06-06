@@ -7,9 +7,6 @@
 ```codecard
 [
     {
-        "name": "Jacdac",
-        "url": "/boards/jacdac",
-        "imageUrl": "/static/libs/jacdac-iot-s2.jpg"
     },
     {
         "name": "Adafruit",
@@ -133,7 +130,7 @@
 
 ## See Also
 
-[Jacdac](/boards/jacdac),
+
 [Adafruit](/boards/adafruit),
 [Arduino](/boards/arduino),
 [SparkFun](/boards/sparkfun),
