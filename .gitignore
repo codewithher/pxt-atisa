@@ -27,6 +27,7 @@ videos/**
 *.db
 *.suo
 *.log
+*.log.txt
 .pioenvs
 .piolibdeps
 lib/
