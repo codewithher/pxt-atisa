@@ -7,8 +7,6 @@
 ```codecard
 [
     {
-    },
-    {
         "name": "Adafruit",
         "url": "/boards/adafruit",
         "imageUrl": "/static/libs/adafruit-trinket-m0.jpg"
@@ -17,11 +15,6 @@
         "name": "Arduino",
         "url": "/boards/arduino",
         "imageUrl": "/static/libs/arduino-mkr1000.jpg"
-    },
-    {
-        "name": "XinaBox",
-        "url": "/boards/xinabox",
-        "imageUrl": "/static/libs/xinabox-cc03.jpg"
     },
     {
         "name": "Misc",
@@ -125,10 +118,8 @@
 
 ## See Also
 
-
 [Adafruit](/boards/adafruit),
 [Arduino](/boards/arduino),
-[XinaBox](/boards/xinabox),
 [Misc](/boards/misc),
 [Digital IO](/projects/digital-io),
 [Analog IO](/projects/analog-io),

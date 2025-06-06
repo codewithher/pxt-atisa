@@ -69,8 +69,6 @@
         "libs/matrix-keypad",
         "libs/adafruit-trinket-m0",
         "libs/robotics-masters-robohatmm1-m4",
-        "libs/xinabox-cc03",
-        "libs/xinabox-cs11",
         "libs/arduino-zero",
         "libs/arduino-mkr1000",        
         "libs/arduino-mkr1010",

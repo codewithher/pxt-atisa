@@ -42,7 +42,6 @@
   "galleries": {
     "Adafruit": "/boards/adafruit",
     "Arduino": "/boards/arduino",
-    "XinaBox": "/boards/xinabox",
     "Misc": "/boards/misc",
     "Digital IO": "/projects/digital-io",
     "Analog IO": "/projects/analog-io",

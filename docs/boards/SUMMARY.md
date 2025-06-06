@@ -2,9 +2,6 @@
 
 * [Adafruit](/boards/adafruit)
     * [Trinket M0](/boards/adafruit-trinket-m0)
-* [XinaBox](/boards/xinabox)
-    * [XinaBox CC03](/boards/xinabox-cc03)
-    * [XinaBox CS11](/boards/xinabox-cs11)
 * [Misc](/boards/misc)
     * [Robotics Masters Robo HAT MM1 M4](/boards/robotics-masters-robohatmm1-m4)
     * [Espressif ESP32 DevKit-C](/boards/espressif-esp32-devkit-c)
