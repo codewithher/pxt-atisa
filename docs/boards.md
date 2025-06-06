@@ -12,13 +12,6 @@ This editor supports various maker boards, based on SAMD21, SAMD51, NRF52.
 
 ---
 
-* name: Arduino
-* url: /boards/arduino
-* imageUrl: /static/libs/arduino-mkr1300.jpg
-
----
-
-
 * name: Misc
 * url: /boards/misc
 * imageUrl: /static/libs/redbear-ble-nano.jpg
@@ -35,6 +28,5 @@ This editor supports various maker boards, based on SAMD21, SAMD51, NRF52.
 ## See Also
 
 [Adafruit](/boards/adafruit),
-[Arduino](/boards/arduino),
 [Misc](/boards/misc),
 [Add a new board](/boards/add-a-new-board)

@@ -12,11 +12,6 @@
         "imageUrl": "/static/libs/adafruit-trinket-m0.jpg"
     },
     {
-        "name": "Arduino",
-        "url": "/boards/arduino",
-        "imageUrl": "/static/libs/arduino-mkr1000.jpg"
-    },
-    {
         "name": "Misc",
         "url": "/boards/misc",
         "imageUrl": "/static/libs/robotics-masters-robohatmm1-m4.jpg"
@@ -119,7 +114,6 @@
 ## See Also
 
 [Adafruit](/boards/adafruit),
-[Arduino](/boards/arduino),
 [Misc](/boards/misc),
 [Digital IO](/projects/digital-io),
 [Analog IO](/projects/analog-io),
