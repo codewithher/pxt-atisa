@@ -1,3 +1,0 @@
-# Machachi
-
-Support for Machachi
