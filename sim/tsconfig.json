@@ -4,10 +4,27 @@
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "declaration": true,
+        "module": "amd",
         "outFile": "../built/sim.js",
-        "rootDir": ".",
+        "rootDir": "../",
         "newLine": "LF",
         "sourceMap": false,
-        "typeRoots": ["../node_modules/@types"]
-    }
+        "typeRoots": ["../node_modules/@types"],
+        "moduleResolution": "node",
+        "baseUrl": "../",
+        "paths": {
+            "pxt-core": ["node_modules/pxt-core/built/pxt.d.ts"],
+            "pxtsim": ["node_modules/pxt-core/built/pxtsim.d.ts"]
+        },
+        "types": ["pxt-core", "pxtsim"]
+    },
+    "include": [
+        "sim/*.ts",
+        "sim/state/*.ts",
+        "sim/visuals/*.ts",
+        "../node_modules/pxt-common-packages/libs/base/sim/*.ts",
+        "../node_modules/pxt-common-packages/libs/core/sim/*.ts",
+        "../node_modules/pxt-common-packages/libs/pins/sim/*.ts",
+        "pxtsim-ref.ts"
+    ]
 }

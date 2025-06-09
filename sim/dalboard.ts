@@ -72,19 +72,21 @@ namespace pxsim {
 
             for (let block of (boardDefinition.visual as BoardImageDefinition).pinBlocks) {
                 // scan labels
-                for (let lbl of block.labels) {
-                    for (let sublbl of lbl.split(/[\/,]/)) {
-                        sublbl = sublbl.replace(/[~\s]+/g, "")
-                        let id = pinId(sublbl)
-                        if (id != null) {
-                            if (pinList.indexOf(id) < 0) {
-                                pinList.push(id)
-                                if ((DAL.PA02 <= id && id <= DAL.PA11) ||
-                                    (DAL.PB00 <= id && id <= DAL.PB09))
-                                    servos[sublbl] = id;
+                if (block.labels) {
+                    for (let lbl of block.labels) {
+                        for (let sublbl of lbl.split(/[\/,]/)) {
+                            sublbl = sublbl.replace(/[~\s]+/g, "")
+                            let id = pinId(sublbl)
+                            if (id != null) {
+                                if (pinList.indexOf(id) < 0) {
+                                    pinList.push(id)
+                                    if ((DAL.PA02 <= id && id <= DAL.PA11) ||
+                                        (DAL.PB00 <= id && id <= DAL.PB09))
+                                        servos[sublbl] = id;
+                                }
+                                pinIds[lbl] = id;
+                                pinIds[sublbl] = id;
                             }
-                            pinIds[lbl] = id;
-                            pinIds[sublbl] = id;
                         }
                     }
                 }
@@ -190,15 +192,18 @@ namespace pxsim {
             const options = (msg.options || {}) as pxt.RuntimeOptions;
 
             const boardDef = msg.boardDefinition;
+            if (boardDef === undefined) {
+                throw new Error("Board definition is required");
+            }
             const cmpsList = msg.parts;
-            cmpsList.sort();
+            cmpsList?.sort();
             const cmpDefs = msg.partDefinitions || {};
             const fnArgs = msg.fnArgs;
 
             const opts: visuals.BoardHostOpts = {
                 state: this,
                 boardDef: boardDef,
-                partsList: cmpsList,
+                partsList: cmpsList || [],
                 partDefs: cmpDefs,
                 fnArgs: fnArgs,
                 maxWidth: "100%",
@@ -246,6 +251,9 @@ namespace pxsim {
 
     export function initRuntimeWithDalBoard(msg: SimulatorRunMessage) {
         U.assert(!runtime.board);
+        if (!msg.boardDefinition) {
+            throw new Error("Board definition is required");
+        }
         let b = new DalBoard(msg.boardDefinition);
         runtime.board = b;
         runtime.postError = (e) => {
@@ -259,8 +267,11 @@ namespace pxsim {
     }
 
     export function parsePinString(pinString: string): Pin {
-        const pinName = pinString && pxsim.readPin(pinString);
-        return pinName && pxtcore.getPin(pinIds[pinName]);
+        const pinName = pxsim.readPin(pinString);
+        if (!pinName) throw new Error(`Invalid pin string: ${pinString}`);
+        const pinId = pinIds[pinName];
+        if (!pinId) throw new Error(`Pin not found: ${pinName}`);
+        return pxtcore.getPin(pinId);
     }
 
     export namespace jacdac {
