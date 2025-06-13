@@ -48,6 +48,7 @@
         "usb": "^2.15.0"
     },
     "scripts": {
+        "dev": "(cd ../pxt && npm run build) && ./link.sh && pxt serve",
         "test": "node node_modules/pxt-core/built/pxt.js travis",
         "svgo": "glob-exec --foreach \"**/boardhd.svg\" -- \"svgo --config=svgo.yml {{file}} -o {{file.dir}}/board.svg \""
     }

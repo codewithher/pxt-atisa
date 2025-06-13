@@ -71,6 +71,19 @@ Note the above command assumes the folder structure of
  pxt      pxt-common-packages  pxt-maker
  ```
 
+### Build from local PXT
+
+By default when you run `npm i` it will install all the dependencies from 
+remote, the `pxt link` commands detailed in setup points them to local instead. 
+Using `npm` we're able to traverse the different dependencies in our local 
+installations as well. However, to make changes in PXT that actually carry over,
+we need to do the following:
+
+1. Make your changes in `pxt` repository.
+2. Run `npm run build` in `pxt` repository.
+3. Run `./link.sh` to relink pxt-atisa to the updated pxt.
+4. Run `pxt serve` in `pxt-atisa` repository.
+
 ### Refresh dal.d.ts files
 
 Whenever you make changes to the ``#defines`` in the .cpp files, you will have to refresh
