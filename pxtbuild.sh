@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cd ../pxt
 npm run build
 cd ../pxt-atisa
