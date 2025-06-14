@@ -1,3 +1,4 @@
+<!-- replace. Also theres no comments in JSON, so im noting here that you also need to update the 'galleries' field in the targetconfig.json file -->
 # My Gallery
 
 ## Tutorials
@@ -10,7 +11,7 @@
 * imageUrl: /static/projects/digital-io/blinky/gallery.png
 * description: Learn to blink an LED
 * youTubeId: Yw6u6YkTgQ4
-
+<!-- replace youtube id ^^ -->
 
 ---
 

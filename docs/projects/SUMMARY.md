@@ -1,3 +1,4 @@
+<!-- replace for galleries/tutorial -->  
 # Projects
 
 * [Parole](/projects/parole)
