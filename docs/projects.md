@@ -3,6 +3,12 @@
 ```codecard
 [
     {
+        "name": "Tutorials",
+        "url": "/projects/tutorials",
+        "imageUrl": "/static/projects/digital-io/blinky/gallery.png",
+        "largeImageUrl": "/static/projects/digital-io/blinky/gallery.gif"
+    },
+    {
         "name": "Jacdac",
         "url": "/boards/jacdac",
         "imageUrl": "/static/libs/jacdac-iot-s2.jpg"
@@ -129,6 +135,7 @@
 
 ## See Also
 
+[Tutorials](/projects/tutorials),
 [Jacdac](/boards/jacdac),
 [Adafruit](/boards/adafruit),
 [Arduino](/boards/arduino),

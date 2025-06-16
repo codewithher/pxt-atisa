@@ -18,14 +18,12 @@ forever(function() {
 
 ## Step 3 @fullscreen
 
-Take a peek at the simulator and make sure the LED is turned off.
-
-![A breadboard with a LED turned off](/static/projects/digital-io/blinky/off.png)
+Explicit tutorial check in step. Do you see the light turn on on the simulator?
 
 ## Step 4 @fullscreen
 
 Add another `||blocks:pause||` and `||pins:digital write||` to create a blinking effect.
-Make sure the digital write is **HIGH**.
+Click [this video](https://youtu.be/qqBmvHD5bCw).
 
 ```blocks
 forever(function() {
@@ -40,15 +38,48 @@ Play with the duration in your pauses to create different patterns.
 
 ## Step 5 @fullscreen
 
-Look at the simulator and make sure your program works as expected.
-
-If you have a @boardname@, press `|Download|` and follow the instruction to get your code on your device.
-
-Click on the **wrench** icon under the simulator to get detailed breadboarding instructions.
-
-![The wrench button](/static/projects/digital-io/blinky/wrench.png)
-
-```config
-feature=uf2
-feature=pind0
-```
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial
+really long tutorial

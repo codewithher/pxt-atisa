@@ -1,5 +1,7 @@
 # Projects
 
+* [Tutorials](/projects/tutorials)
+  * [Preview PopUp](/projects/tutorials/popup)
 * [Jacdac](/boards/jacdac)
   * [MSR Jacdac IoT Brain 48 (ESP32-S2)](/boards/jacdac-iot-s2)
   * [MSR Jacdac Brain RP2040 59](/boards/jacdac-brain-rp2040)
