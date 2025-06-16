@@ -45,6 +45,7 @@
     }
   },
   "galleries": {
+    "Tutorials": "/projects/tutorials",
     "Jacdac": "/boards/jacdac",
     "Adafruit": "/boards/adafruit",
     "Arduino": "/boards/arduino",
