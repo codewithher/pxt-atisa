@@ -17,7 +17,7 @@
 
 * name: Temperature Sensor
 * url: /projects/my-gallery/temp
-* cardType: template
+* cardType: tutorial
 * imageUrl: /static/projects/digital-io/button-led/gallery.png
 * description: example 2
 
@@ -26,9 +26,11 @@
 
 * name: Servo Control
 * url: /projects/my-gallery/servo
-* cardType: template
-* imageUrl: /static/projects/digital-io/switch-led/gallery.png
-* description: example 3
+* cardType: tutorial
+* imageUrl: /static/projects/analog-io/blink-to-light/gallery.png
+* largeImageUrl: /static/projects/analog-io/blink-to-light/gallery.gif
+* videoUrl: /static/projects/analog-io/blink-to-light/gallery.mp4
+* description: Learn about analog read
 
 
 ### ~

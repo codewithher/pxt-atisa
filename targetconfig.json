@@ -50,6 +50,7 @@
     "Christmas": "/projects/christmas",
     "Kwanzaa": "/projects/kwanzaa",
     "My Gallery": "/projects/my-gallery",
-    "Adafruit": "/boards/adafruit"
+    "Adafruit": "/boards/adafruit",
+    "Analog IO": "/projects/analog-io"
   }
 }
