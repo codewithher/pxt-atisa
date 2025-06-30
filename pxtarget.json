@@ -422,6 +422,7 @@
     "appTheme": {
         "accentColor": "#ecf0f1",
         "backgroundColor": "#ffffff",
+        "coloredToolbox": true,
         "logoUrl": "https://github.com/microsoft/pxt-maker",
         "logo": "./static/logo.svg",
         "docsLogo": "./static/logo.svg",
