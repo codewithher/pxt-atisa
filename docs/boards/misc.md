@@ -51,6 +51,12 @@
 
 ---
 
+* name: Atisa Menorah
+* url: /boards/atisa-menorah
+* cardType: template
+
+---
+
 * name: Add a new board
 * url: /boards/add-a-new-board
 * cardType: url

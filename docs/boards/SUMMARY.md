@@ -12,6 +12,7 @@
     * [Feather Bluefruit NRF52840](/boards/adafruit-feather-nrf52840-express)
     * [ItsyBitsy nrf52840 Express](/boards/adafruit-itsybitsy-nrf52840-express)
     * [Circuit Playground Bluefruit](/boards/adafruit-circuit-playground-bluefruit)
+    * [Atisa Menorah](/boards/atisa-menorah)
 * [SparkFun](/boards/sparkfun)
     * [RedBoard Turbo](/boards/sparkfun-redboard-turbo)
     * [LumiDrive](/boards/sparkfun-lumidrive)

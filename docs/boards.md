@@ -42,6 +42,12 @@ This editor supports various maker boards, based on SAMD21, SAMD51, NRF52.
 
 ---
 
+* name: Atisa Menorah
+* url: /boards/atisa-menorah
+* imageUrl: /static/libs/atisa-menorah.png
+
+---
+
 * name: Add your board
 * url: /boards/add-a-new-board
 * imageUrl: /static/libs/bead-servo.jpg
