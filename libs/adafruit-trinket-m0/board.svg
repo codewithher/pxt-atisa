@@ -291,8 +291,6 @@
   <path id="connector78pin" transform="rotate(90)" fill="#9a916c" stroke="none" stroke-width="0" d="M64.735-21.911h6.993v6.993h-6.993z"/>
   <path id="connector79pin" transform="rotate(90)" fill="#9a916c" stroke="none" stroke-width="0" d="M32.876-21.911h6.993v6.993h-6.993z"/>
   <rect ry="3.885" rx="3.885" height="7.77" x="45.95" width="7.77" y="-27.569" id="connector84pin" transform="rotate(90)" fill="#9a916c" stroke="none" stroke-width="0"/>
-  <circle r="10.521" cx="14.803" id="connector85pin" cy="-29.604" transform="rotate(90)" fill="none" stroke="#9a916c" stroke-width="3.947"/>
-  <circle r="10.521" cx="103.618" id="connector86pin" cy="-29.604" transform="rotate(90)" fill="none" stroke="#9a916c" stroke-width="3.947"/>
   <g id="g5135" transform="rotate(90 90.085 118.214) scale(2.7412)">
     <g id="g5133">
       <g id="4uconn_20329_v2">
