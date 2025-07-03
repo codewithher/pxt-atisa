@@ -44,10 +44,11 @@
     },
     "dependencies": {
         "pxt-common-packages": "12.3.30",
-        "pxt-core": "11.4.7", 
+        "pxt-core": "11.4.8", 
         "usb": "^2.15.0"
     },
     "scripts": {
+        "dev": "set -e &&(cd ../pxt && npm run build) && ./link.sh && pxt serve",
         "test": "node node_modules/pxt-core/built/pxt.js travis",
         "svgo": "glob-exec --foreach \"**/boardhd.svg\" -- \"svgo --config=svgo.yml {{file}} -o {{file.dir}}/board.svg \""
     }
