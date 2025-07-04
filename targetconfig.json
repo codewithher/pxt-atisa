@@ -45,27 +45,12 @@
     }
   },
   "galleries": {
-    "Jacdac": "/boards/jacdac",
+    "Parole": "/projects/parole",
+    "Hanukkah": "/projects/hanukkah",
+    "Christmas": "/projects/christmas",
+    "Kwanzaa": "/projects/kwanzaa",
+    "My Gallery": "/projects/my-gallery",
     "Adafruit": "/boards/adafruit",
-    "Arduino": "/boards/arduino",
-    "SparkFun": "/boards/sparkfun",
-    "XinaBox": "/boards/xinabox",
-    "Misc": "/boards/misc",
-    "Digital IO": "/projects/digital-io",
-    "Analog IO": "/projects/analog-io",
-    "Pixel": "/projects/pixel",
-    "Light": "/projects/light",
-    "Music": "/projects/music",
-    "Servos": "/projects/servos",
-    "HID": "/projects/hid",
-    "Screen": "/projects/screen",
-    "Accelerometer": "/projects/accelerometer",
-    "Serial": "/projects/serial",
-    "Storage": "/projects/storage",
-    "LCD": "/projects/lcd",
-    "LoRa": "/projects/lora",
-    "Power": "/projects/power",
-    "Bit Radio": "/projects/radio",
-    "Boards": "/boards"
+    "Analog IO": "/projects/analog-io"
   }
 }

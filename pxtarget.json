@@ -129,6 +129,11 @@
         "parts": true,
         "partsAspectRatio": 0.69,
         "dynamicBoardDefinition": true,
+        "defaultBoard": {
+            "name": "Adafruit Trinket M0",
+            "url": "libs/adafruit-trinket-m0",
+            "variant": "samd21"
+        },
         "messageSimulators": {
             "jacdac": {
                 "url": "https://microsoft.github.io/jacdac-docs/tools/makecode-sim?webusb=0&parentOrigin=$PARENT_ORIGIN$",
@@ -451,7 +456,7 @@
         "homeScreenHeroGallery": "/hero-banner",
         "debugger": true,
         "print": true,
-        "chooseBoardOnNewProject": true,
+        "chooseBoardOnNewProject": false,
         "lightToc": true,
         "instructions": true,
         "docMenu": [
