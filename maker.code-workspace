@@ -4,7 +4,7 @@
 			"path": "../pxt"
 		},
 		{
-			"path": "../pxt-common-packages"
+			"path": "../pxt-library"
 		},
 		{
 			"path": "."
