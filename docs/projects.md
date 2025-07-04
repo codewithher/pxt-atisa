@@ -1,7 +1,5 @@
 # Projects
 
-<!-- replace -->
-
 ```codecard
 [
     {
@@ -27,48 +25,32 @@
     {
         "name": "My Gallery",
         "url": "/projects/my-gallery",
-        "imageUrl": "/static/projects/digital-io/blinky/gallery.png"
+        "imageUrl": "/static/projects/digital-io/blinky/gallery.png",
+        "largeImageUrl": "/static/projects/analog-io/blink-to-light/gallery.gif",
+        "videoUrl": "/static/projects/analog-io/blink-to-light/gallery.mp4"
     },
     {
         "name": "Adafruit",
         "url": "/boards/adafruit",
         "imageUrl": "/static/libs/adafruit-metro-m0-express.jpg"
+    },
+    {
+        "name": "Analog IO",
+        "url": "/projects/analog-io",
+        "imageUrl": "/static/projects/analog-io/blink-to-light/gallery.png",
+        "largeImageUrl": "/static/projects/analog-io/blink-to-light/gallery.gif",
+        "videoUrl": "/static/projects/analog-io/blink-to-light/gallery.mp4"
     }
 ]
 ```
 
 ## See Also
 
-<<<<<<< HEAD
-[Tutorials](/projects/tutorials),
-[Jacdac](/boards/jacdac),
-[Adafruit](/boards/adafruit),
-[Arduino](/boards/arduino),
-[SparkFun](/boards/sparkfun),
-[XinaBox](/boards/xinabox),
-[Misc](/boards/misc),
-[Digital IO](/projects/digital-io),
-[Analog IO](/projects/analog-io),
-[Pixel](/projects/pixel),
-[Light](/projects/light),
-[Music](/projects/music),
-[Servos](/projects/servos),
-[HID](/projects/hid),
-[Screen](/projects/screen),
-[Accelerometer](/projects/accelerometer),
-[Serial](/projects/serial),
-[Storage](/projects/storage),
-[LCD](/projects/lcd),
-[LoRa](/projects/lora),
-[Power](/projects/power),
-[Bit Radio](/projects/radio),
-[Boards](/boards)
-=======
 [Parole](/projects/parole),
 [Hanukkah](/projects/hanukkah),
 [Christmas](/projects/christmas),
 [Kwanzaa](/projects/kwanzaa),
 [My Gallery](/projects/my-gallery),
-[Adafruit](/boards/adafruit)
+[Adafruit](/boards/adafruit),
+[Analog IO](/projects/analog-io)
 
-> > > > > > > cb701d018d7ac872d054049e92d027dffcb0014f
