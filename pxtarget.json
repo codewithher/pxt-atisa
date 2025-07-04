@@ -539,7 +539,8 @@
         "tutorialExplicitHints": true,
         "chooseLanguageRestrictionOnNewProject": true,
         "openProjectNewTab": true,
-        "errorList": true
+        "errorList": true, 
+        "immersiveReader": true
     },
     "ignoreDocsErrors": true,
     "uploadDocs": false

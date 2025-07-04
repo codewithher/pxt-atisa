@@ -1,5 +1,5 @@
 # Projects
-<!-- replace -->
+
 ```codecard
 [
     {
@@ -25,12 +25,21 @@
     {
         "name": "My Gallery",
         "url": "/projects/my-gallery",
-        "imageUrl": "/static/projects/digital-io/blinky/gallery.png"
+        "imageUrl": "/static/projects/digital-io/blinky/gallery.png",
+        "largeImageUrl": "/static/projects/analog-io/blink-to-light/gallery.gif",
+        "videoUrl": "/static/projects/analog-io/blink-to-light/gallery.mp4"
     },
     {
         "name": "Adafruit",
         "url": "/boards/adafruit",
         "imageUrl": "/static/libs/adafruit-metro-m0-express.jpg"
+    },
+    {
+        "name": "Analog IO",
+        "url": "/projects/analog-io",
+        "imageUrl": "/static/projects/analog-io/blink-to-light/gallery.png",
+        "largeImageUrl": "/static/projects/analog-io/blink-to-light/gallery.gif",
+        "videoUrl": "/static/projects/analog-io/blink-to-light/gallery.mp4"
     }
 ]
 ```
@@ -42,6 +51,6 @@
 [Christmas](/projects/christmas),
 [Kwanzaa](/projects/kwanzaa),
 [My Gallery](/projects/my-gallery),
-[Adafruit](/boards/adafruit)
-
+[Adafruit](/boards/adafruit),
+[Analog IO](/projects/analog-io)
 

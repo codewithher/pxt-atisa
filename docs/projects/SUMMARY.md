@@ -1,4 +1,3 @@
-<!-- replace for galleries/tutorial -->  
 # Projects
 
 * [Parole](/projects/parole)
@@ -50,4 +49,7 @@
   * [Adafruit Feather Bluefruit NRF52840](/boards/adafruit-feather-nrf52840-express)
   * [Adafruit ItsyBitsy NRF52840 Express](/boards/adafruit-itsybitsy-nrf52840-express)
   * [Adafruit Circuit Playground Bluefruit](/boards/adafruit-circuit-playground-bluefruit)
-
+* [Analog IO](/projects/analog-io)
+  * [Blink to Light](/projects/analog-io/blink-to-light)
+  * [Glowy](/projects/analog-io/glowy)
+  * [Glow Light](/projects/analog-io/glow-light)
