@@ -7,19 +7,61 @@
       "height": 85.5889892578125,
       "pinDist": 15,
       "pinBlocks": [],
-      "leds": [],
+      "leds": [
+        {
+          "x": 30,
+          "y": 70,
+          "w": 4,
+          "h": 4,
+          "color": "#ff0000",
+          "label": "LED"
+        },
+        {
+          "x": 30,
+          "y": 60,
+          "w": 5,
+          "h": 5,
+          "color": "neopixel",
+          "label": "NEOPIXEL"
+        }
+      ],
       "touchPads": [],
       "buttons": []
     },
-    "gpioPinMap": {},
-    "groundPins": [],
-    "threeVoltPins": [],
-    "fiveVoltPins": [],
+    "gpioPinMap": {
+      "LED": "D13",
+      "NEOPIXEL": "D4",
+      "D0": "D0",
+      "D1": "D1",
+      "D2": "D2",
+      "D3": "D3",
+      "D4": "D4",
+      "A0": "A0",
+      "A1": "A1",
+      "A2": "A2",
+      "A3": "A3",
+      "A4": "A4",
+      "SCL": "SCL",
+      "SDA": "SDA",
+      "MOSI": "MOSI",
+      "MISO": "MISO",
+      "SCK": "SCK",
+      "TX": "TX",
+      "RX": "RX"
+    },
+    "groundPins": ["GND"],
+    "threeVoltPins": ["3V3"],
+    "fiveVoltPins": ["5V"],
     "i2cPins": {
       "SDA": "SDA",
       "SCL": "SCL"
     },
-    "onboardComponents": [],
+    "spiPins": {
+      "MOSI": "MOSI",
+      "MISO": "MISO",
+      "SCK": "SCK"
+    },
+    "onboardComponents": ["pixel"],
     "marginWhenBreadboarding": [
       0,
       0,
