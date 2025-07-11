@@ -1,71 +1,150 @@
 {
-    "driveDisplayName": "",
-    "visual": {
-      "image": "pkg://board.svg",
-      "useCrocClips": false,
-      "width": 63.98745346069336,
-      "height": 85.5889892578125,
-      "pinDist": 15,
-      "pinBlocks": [],
-      "leds": [
-        {
-          "x": 30,
-          "y": 70,
-          "w": 4,
-          "h": 4,
-          "color": "#ff0000",
-          "label": "LED"
-        },
-        {
-          "x": 30,
-          "y": 60,
-          "w": 5,
-          "h": 5,
-          "color": "neopixel",
-          "label": "NEOPIXEL"
-        }
-      ],
-      "touchPads": [],
-      "buttons": []
-    },
-    "gpioPinMap": {
-      "LED": "D13",
-      "NEOPIXEL": "D4",
-      "D0": "D0",
-      "D1": "D1",
-      "D2": "D2",
-      "D3": "D3",
-      "D4": "D4",
-      "A0": "A0",
-      "A1": "A1",
-      "A2": "A2",
-      "A3": "A3",
-      "A4": "A4",
-      "SCL": "SCL",
-      "SDA": "SDA",
-      "MOSI": "MOSI",
-      "MISO": "MISO",
-      "SCK": "SCK",
-      "TX": "TX",
-      "RX": "RX"
-    },
-    "groundPins": ["GND"],
-    "threeVoltPins": ["3V3"],
-    "fiveVoltPins": ["5V"],
-    "i2cPins": {
-      "SDA": "SDA",
-      "SCL": "SCL"
-    },
-    "spiPins": {
-      "MOSI": "MOSI",
-      "MISO": "MISO",
-      "SCK": "SCK"
-    },
-    "onboardComponents": ["pixel"],
-    "marginWhenBreadboarding": [
-      0,
-      0,
-      80,
-      0
-    ]
+  "driveDisplayName": "",
+  "visual": {
+    "image": "pkg://board.svg",
+    "useCrocClips": false,
+    "width": 409.62432861328125,
+    "height": 485.56903076171875,
+    "pinDist": 15,
+    "pinBlocks": [
+      {
+        "x": 227.7543777712405,
+        "y": 369.6968222703879,
+        "labels": [
+          "VBAT"
+        ]
+      },
+      {
+        "x": 208.02269350583958,
+        "y": 369.6968222703879,
+        "labels": [
+          "GND"
+        ]
+      },
+      {
+        "x": 188.272298156588,
+        "y": 369.6968222703879,
+        "labels": [
+          "A4_D4_TX_MOSI"
+        ]
+      },
+      {
+        "x": 168.53436923850828,
+        "y": 369.6968222703879,
+        "labels": [
+          "A3_D3_RX_SCK"
+        ]
+      },
+      {
+        "x": 148.80268497310735,
+        "y": 468.1922676403129,
+        "labels": [
+          "3V3"
+        ]
+      },
+      {
+        "x": 168.53436923850828,
+        "y": 468.1922676403129,
+        "labels": [
+          "A1_D2_SCL_MISO"
+        ]
+      },
+      {
+        "x": 188.272298156588,
+        "y": 468.1922676403129,
+        "labels": [
+          "A0_D1"
+        ]
+      },
+      {
+        "x": 208.02269350583958,
+        "y": 468.1922676403129,
+        "labels": [
+          "A2_D0_SDA"
+        ]
+      },
+      {
+        "x": 114.9234312624489,
+        "y": 412.6453022009505,
+        "labels": [
+          "RESET"
+        ]
+      }
+    ],
+    "leds": [
+      {
+        "x": 282.4396476240902,
+        "y": 466.13103997939635,
+        "w": 6.264919207243066,
+        "h": 6.264880191660064,
+        "color": "#ff0000",
+        "label": "LED"
+      },
+      {
+        "x": 189.12175391438566,
+        "y": 405.53091929957327,
+        "w": 11.136937754336072,
+        "h": 10.056290621329891,
+        "color": "neopixel",
+        "label": "NEOPIXEL"
+      }
+    ],
+    "touchPads": [],
+    "buttons": []
+  },
+  "gpioPinMap": {
+    "VBAT": "VBAT",
+    "GND": "GND",
+    "A4_D4_TX_MOSI": "A4_D4_TX_MOSI",
+    "A4": "A4_D4_TX_MOSI",
+    "D4": "A4_D4_TX_MOSI",
+    "TX": "A4_D4_TX_MOSI",
+    "MOSI": "A4_D4_TX_MOSI",
+    "A3_D3_RX_SCK": "A3_D3_RX_SCK",
+    "A3": "A3_D3_RX_SCK",
+    "D3": "A3_D3_RX_SCK",
+    "RX": "A3_D3_RX_SCK",
+    "SCK": "A3_D3_RX_SCK",
+    "3V3": "3V3",
+    "A1_D2_SCL_MISO": "A1_D2_SCL_MISO",
+    "A1": "A1_D2_SCL_MISO",
+    "D2": "A1_D2_SCL_MISO",
+    "SCL": "A1_D2_SCL_MISO",
+    "MISO": "A1_D2_SCL_MISO",
+    "A0_D1": "A0_D1",
+    "A0": "A0_D1",
+    "D1": "A0_D1",
+    "A2_D0_SDA": "A2_D0_SDA",
+    "A2": "A2_D0_SDA",
+    "D0": "A2_D0_SDA",
+    "SDA": "A2_D0_SDA",
+    "LED": "LED",
+    "RESET": "RESET",
+    "NEOPIXEL": "NEOPIXEL"
+  },
+  "groundPins": [
+    "GND"
+  ],
+  "threeVoltPins": [
+    "3V3"
+  ],
+  "fiveVoltPins": [],
+  "i2cPins": {
+    "SDA": "SDA",
+    "SCL": "SCL"
+  },
+  "onboardComponents": [
+    "pixel"
+  ],
+  "marginWhenBreadboarding": [
+    0,
+    0,
+    80,
+    0
+  ],
+  "spiPins": {
+    "MOSI": "MOSI",
+    "MISO": "MISO",
+    "SCK": "SCK"
   }
+}
