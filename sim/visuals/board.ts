@@ -272,27 +272,101 @@ namespace pxsim.visuals {
         }
     }
 
+    interface CandleDefinition {
+        id: string;
+        x: number;
+        y: number;
+        r: number;
+        color: string;
+    }
+
+    interface BoardVisualDefinition extends BoardImageDefinition {
+        candles?: CandleDefinition[];
+    }
+
     class BoardNeopixel {
         name: string;
-        element: SVGCircleElement;
+        element: SVGGElement;
+        private candles: {element: SVGCircleElement, defaultColor: string}[] = [];
 
         constructor(name: string, x: number, y: number, r: number) {
             this.name = name;
-            this.element = svg.elt("circle", { cx: x + r / 2, cy: y + r / 2, r: 10 }) as SVGCircleElement
-            svg.title(this.element, name);
+            this.element = svg.elt("g", { class: "sim-candles" }) as SVGGElement;
+            
+            // Create the main neopixel element (kept for backward compatibility)
+            const mainPixel = svg.elt("circle", { 
+                cx: x + r / 2, 
+                cy: y + r / 2, 
+                r: 10,
+                style: "display: none" // Hide the original neopixel
+            }) as SVGCircleElement;
+            this.element.appendChild(mainPixel);
+            
+            // Create candle elements if we're on the Atisa Menorah board
+            const board = (window as any).board as pxsim.DalBoard;
+            if (board?.boardDefinition?.visual) {
+                const visualDef = board.boardDefinition.visual as BoardVisualDefinition;
+                if (visualDef.candles) {
+                    this.createCandles(visualDef.candles);
+                }
+            }
+        }
+
+        private createCandles(candleDefs: CandleDefinition[]) {
+            for (const candleDef of candleDefs) {
+                const candle = svg.elt("circle", {
+                    cx: candleDef.x,
+                    cy: candleDef.y,
+                    r: candleDef.r,
+                    fill: candleDef.color,
+                    class: `candle ${candleDef.id}`
+                }) as SVGCircleElement;
+                
+                // Add glow effect to candles
+                svg.filter(candle, `url(#neopixelglow)`);
+                
+                this.candles.push({
+                    element: candle,
+                    defaultColor: candleDef.color
+                });
+                
+                this.element.appendChild(candle);
+            }
         }
 
         setColor(rgb: [number, number, number]) {
+            if (!this.candles.length) {
+                // Fallback to original behavior if no candles
+                const hsl = visuals.rgbToHsl(rgb);
+                const [h, s, l] = hsl;
+                const lx = Math.max(l * 1.3, 85);
+                
+                this.element.style.stroke = `hsl(${h}, ${s}%, ${Math.min(l * 3, 75)}%)`;
+                this.element.style.strokeWidth = "1.5";
+                svg.fill(this.element, `hsl(${h}, ${s}%, ${lx}%)`);
+                svg.filter(this.element, `url(#neopixelglow)`);
+                return;
+            }
+            
+            // For the Menorah, we'll set all candles to the same color for now
+            // In the future, we could map different neopixel indices to different candles
             const hsl = visuals.rgbToHsl(rgb);
-            let [h, s, l] = hsl;
+            const [h, s, l] = hsl;
             const lx = Math.max(l * 1.3, 85);
-
-            // at least 10% luminosity
-            l = l * 90 / 100 + 10;
-            this.element.style.stroke = `hsl(${h}, ${s}%, ${Math.min(l * 3, 75)}%)`
-            this.element.style.strokeWidth = "1.5";
-            svg.fill(this.element, `hsl(${h}, ${s}%, ${lx}%)`);
-            svg.filter(this.element, `url(#neopixelglow)`);
+            
+            for (const candle of this.candles) {
+                // For the shamash, we might want to keep its original color
+                const isShamash = (candle.element.getAttribute('class') || '').includes('shamash');
+                if (isShamash) {
+                    // Optionally keep shamash color or apply a different effect
+                    // For now, we'll keep its original color
+                    continue;
+                }
+                
+                candle.element.style.stroke = `hsl(${h}, ${s}%, ${Math.min(l * 3, 75)}%)`;
+                candle.element.style.strokeWidth = "1.5";
+                svg.fill(candle.element, `hsl(${h}, ${s}%, ${lx}%)`);
+            }
         }
     }
 

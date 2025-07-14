@@ -90,7 +90,65 @@
       }
     ],
     "touchPads": [],
-    "buttons": []
+    "buttons": [],
+    "candles": [
+      {
+        "id": "candle1",
+        "x": 100,
+        "y": 200,
+        "r": 15,
+        "color": "#ffffff"
+      },
+      {
+        "id": "candle2",
+        "x": 140,
+        "y": 180,
+        "r": 15,
+        "color": "#ffffff"
+      },
+      {
+        "id": "candle3",
+        "x": 180,
+        "y": 160,
+        "r": 15,
+        "color": "#ffffff"
+      },
+      {
+        "id": "candle4",
+        "x": 220,
+        "y": 140,
+        "r": 15,
+        "color": "#ffffff"
+      },
+      {
+        "id": "candle5",
+        "x": 260,
+        "y": 160,
+        "r": 15,
+        "color": "#ffffff"
+      },
+      {
+        "id": "candle6",
+        "x": 300,
+        "y": 180,
+        "r": 15,
+        "color": "#ffffff"
+      },
+      {
+        "id": "candle7",
+        "x": 340,
+        "y": 200,
+        "r": 15,
+        "color": "#ffffff"
+      },
+      {
+        "id": "shamash",
+        "x": 220,
+        "y": 220,
+        "r": 12,
+        "color": "#ffcc00"
+      }
+    ]
   },
   "gpioPinMap": {
     "VBAT": "VBAT",
