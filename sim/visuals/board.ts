@@ -102,9 +102,93 @@ namespace pxsim.visuals {
         disableTilt?: boolean;
     }
 
+    export interface ICandleTheme {
+        candleOn?: string;
+        candleOff?: string;
+        glowColor?: string;
+    }
+
+    export const defaultCandleTheme: ICandleTheme = {
+        candleOn: "#ff8c1a",  // Bright orange for lit candles
+        candleOff: "#4d4d4d", // Dark gray for unlit candles
+        glowColor: "#ffcc00"  // Yellow glow for candles
+    };
+
+    const CANDLE_STYLE = `
+.sim-candle {
+    transition: fill 0.3s ease, filter 0.3s ease;
+}
+.sim-candle.glow {
+    filter: url(#candle-glow);
+}
+    `;
+
+    function createGlowEffects(defs: SVGElement) {
+        // Create glow effect for candles
+        const candleGlow = svg.elt("filter", { id: "candle-glow", x: "-50%", y: "-50%", width: "200%", height: "200%" });
+        candleGlow.innerHTML = `
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        `;
+        defs.appendChild(candleGlow);
+    }
+
+    class CandleView {
+        public element: SVGGElement;
+        private candles: {element: SVGCircleElement, defaultColor: string}[] = [];
+        private theme: ICandleTheme;
+    
+        constructor() {
+            this.theme = {...defaultCandleTheme};
+            this.element = svg.elt("g", { class: "sim-candles" }) as SVGGElement;
+            this.createCandles();
+        }
+    
+        private createCandles() {
+            const board = (window as any).board as pxsim.DalBoard;
+            if (!board?.boardDefinition?.visual?.candles) return;
+
+            board.boardDefinition.visual.candles.forEach((candleDef: any) => {
+                const candle = svg.elt("circle", {
+                    cx: candleDef.x,
+                    cy: candleDef.y,
+                    r: candleDef.r,
+                    class: "sim-candle",
+                    fill: this.theme.candleOff
+                }) as SVGCircleElement;
+    
+                // Add glow effect
+                svg.filter(candle, "url(#candle-glow)");
+                
+                this.candles.push({
+                    element: candle,
+                    defaultColor: candleDef.color || this.theme.candleOn
+                });
+                
+                this.element.appendChild(candle);
+            });
+        }
+    
+        public updateTheme(theme?: ICandleTheme) {
+            if (theme) {
+                this.theme = {...defaultCandleTheme, ...theme};
+            }
+            this.updateCandles();
+        }
+    
+        private updateCandles() {
+            this.candles.forEach(candle => {
+                // In Phase 1, we'll just use the default colors
+                // We'll add NeoPixel integration in Phase 2
+                svg.fill(candle.element, candle.defaultColor);
+            });
+        }
+    }
+
     export class MetroBoardSvg extends GenericBoardSvg {
 
         public board: pxsim.DalBoard;
+        private candleView: CandleView;
         private onBoardLeds: BoardLed[];
         private onBoardNeopixels: BoardNeopixel[];
         private onBoardReset: BoardResetButton;
@@ -121,6 +205,30 @@ namespace pxsim.visuals {
             this.onBoardNeopixels = [];
             this.onBoardTouchPads = [];
             this.onBoardButtons = [];
+
+            this.onBoardNeopixels = [];
+        for (const l of props.visualDef.leds || []) {
+            if (l.color == "neopixel") {
+                const onBoardNeopixel = new BoardNeopixel(l.label, l.x, l.y, l.w || 0);
+                this.onBoardNeopixels.push(onBoardNeopixel);
+                el.appendChild(onBoardNeopixel.element);
+            }
+        }
+
+        // Add this right after the NeoPixel initialization
+        if (props.visualDef.candles) {
+            // Add the glow effects to the defs
+            createGlowEffects(this.defs);
+            
+            // Create and add the candle view
+            this.candleView = new CandleView();
+            el.appendChild(this.candleView.element);
+            
+            // Add the candle styles
+            const style = document.createElement("style");
+            style.textContent = CANDLE_STYLE;
+            el.appendChild(style);
+        }
 
             // neopixels/leds
             for (const l of props.visualDef.leds || []) {
