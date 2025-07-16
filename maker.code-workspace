@@ -7,6 +7,12 @@
 			"path": "../pxt-library"
 		},
 		{
+			"path": "../pxt-simulator-tools"
+		},
+		{
+			"path": "../pxt-neopixel"
+		},
+		{
 			"path": "."
 		}
 	]
