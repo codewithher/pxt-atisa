@@ -102,93 +102,9 @@ namespace pxsim.visuals {
         disableTilt?: boolean;
     }
 
-    export interface ICandleTheme {
-        candleOn?: string;
-        candleOff?: string;
-        glowColor?: string;
-    }
-
-    export const defaultCandleTheme: ICandleTheme = {
-        candleOn: "#ff8c1a",  // Bright orange for lit candles
-        candleOff: "#4d4d4d", // Dark gray for unlit candles
-        glowColor: "#ffcc00"  // Yellow glow for candles
-    };
-
-    const CANDLE_STYLE = `
-.sim-candle {
-    transition: fill 0.3s ease, filter 0.3s ease;
-}
-.sim-candle.glow {
-    filter: url(#candle-glow);
-}
-    `;
-
-    function createGlowEffects(defs: SVGElement) {
-        // Create glow effect for candles
-        const candleGlow = svg.elt("filter", { id: "candle-glow", x: "-50%", y: "-50%", width: "200%", height: "200%" });
-        candleGlow.innerHTML = `
-            <feGaussianBlur stdDeviation="3" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-        `;
-        defs.appendChild(candleGlow);
-    }
-
-    class CandleView {
-        public element: SVGGElement;
-        private candles: {element: SVGCircleElement, defaultColor: string}[] = [];
-        private theme: ICandleTheme;
-    
-        constructor() {
-            this.theme = {...defaultCandleTheme};
-            this.element = svg.elt("g", { class: "sim-candles" }) as SVGGElement;
-            this.createCandles();
-        }
-    
-        private createCandles() {
-            const board = (window as any).board as pxsim.DalBoard;
-            if (!board?.boardDefinition?.visual?.candles) return;
-
-            board.boardDefinition.visual.candles.forEach((candleDef: any) => {
-                const candle = svg.elt("circle", {
-                    cx: candleDef.x,
-                    cy: candleDef.y,
-                    r: candleDef.r,
-                    class: "sim-candle",
-                    fill: this.theme.candleOff
-                }) as SVGCircleElement;
-    
-                // Add glow effect
-                svg.filter(candle, "url(#candle-glow)");
-                
-                this.candles.push({
-                    element: candle,
-                    defaultColor: candleDef.color || this.theme.candleOn
-                });
-                
-                this.element.appendChild(candle);
-            });
-        }
-    
-        public updateTheme(theme?: ICandleTheme) {
-            if (theme) {
-                this.theme = {...defaultCandleTheme, ...theme};
-            }
-            this.updateCandles();
-        }
-    
-        private updateCandles() {
-            this.candles.forEach(candle => {
-                // In Phase 1, we'll just use the default colors
-                // We'll add NeoPixel integration in Phase 2
-                svg.fill(candle.element, candle.defaultColor);
-            });
-        }
-    }
-
     export class MetroBoardSvg extends GenericBoardSvg {
 
         public board: pxsim.DalBoard;
-        private candleView: CandleView;
         private onBoardLeds: BoardLed[];
         private onBoardNeopixels: BoardNeopixel[];
         private onBoardReset: BoardResetButton;
@@ -205,30 +121,6 @@ namespace pxsim.visuals {
             this.onBoardNeopixels = [];
             this.onBoardTouchPads = [];
             this.onBoardButtons = [];
-
-            this.onBoardNeopixels = [];
-        for (const l of props.visualDef.leds || []) {
-            if (l.color == "neopixel") {
-                const onBoardNeopixel = new BoardNeopixel(l.label, l.x, l.y, l.w || 0);
-                this.onBoardNeopixels.push(onBoardNeopixel);
-                el.appendChild(onBoardNeopixel.element);
-            }
-        }
-
-        // Add this right after the NeoPixel initialization
-        if (props.visualDef.candles) {
-            // Add the glow effects to the defs
-            createGlowEffects(this.defs);
-            
-            // Create and add the candle view
-            this.candleView = new CandleView();
-            el.appendChild(this.candleView.element);
-            
-            // Add the candle styles
-            const style = document.createElement("style");
-            style.textContent = CANDLE_STYLE;
-            el.appendChild(style);
-        }
 
             // neopixels/leds
             for (const l of props.visualDef.leds || []) {
@@ -380,101 +272,27 @@ namespace pxsim.visuals {
         }
     }
 
-    interface CandleDefinition {
-        id: string;
-        x: number;
-        y: number;
-        r: number;
-        color: string;
-    }
-
-    interface BoardVisualDefinition extends BoardImageDefinition {
-        candles?: CandleDefinition[];
-    }
-
     class BoardNeopixel {
         name: string;
-        element: SVGGElement;
-        private candles: {element: SVGCircleElement, defaultColor: string}[] = [];
+        element: SVGCircleElement;
 
         constructor(name: string, x: number, y: number, r: number) {
             this.name = name;
-            this.element = svg.elt("g", { class: "sim-candles" }) as SVGGElement;
-            
-            // Create the main neopixel element (kept for backward compatibility)
-            const mainPixel = svg.elt("circle", { 
-                cx: x + r / 2, 
-                cy: y + r / 2, 
-                r: 10,
-                style: "display: none" // Hide the original neopixel
-            }) as SVGCircleElement;
-            this.element.appendChild(mainPixel);
-            
-            // Create candle elements if we're on the Atisa Menorah board
-            const board = (window as any).board as pxsim.DalBoard;
-            if (board?.boardDefinition?.visual) {
-                const visualDef = board.boardDefinition.visual as BoardVisualDefinition;
-                if (visualDef.candles) {
-                    this.createCandles(visualDef.candles);
-                }
-            }
-        }
-
-        private createCandles(candleDefs: CandleDefinition[]) {
-            for (const candleDef of candleDefs) {
-                const candle = svg.elt("circle", {
-                    cx: candleDef.x,
-                    cy: candleDef.y,
-                    r: candleDef.r,
-                    fill: candleDef.color,
-                    class: `candle ${candleDef.id}`
-                }) as SVGCircleElement;
-                
-                // Add glow effect to candles
-                svg.filter(candle, `url(#neopixelglow)`);
-                
-                this.candles.push({
-                    element: candle,
-                    defaultColor: candleDef.color
-                });
-                
-                this.element.appendChild(candle);
-            }
+            this.element = svg.elt("circle", { cx: x + r / 2, cy: y + r / 2, r: 10 }) as SVGCircleElement
+            svg.title(this.element, name);
         }
 
         setColor(rgb: [number, number, number]) {
-            if (!this.candles.length) {
-                // Fallback to original behavior if no candles
-                const hsl = visuals.rgbToHsl(rgb);
-                const [h, s, l] = hsl;
-                const lx = Math.max(l * 1.3, 85);
-                
-                this.element.style.stroke = `hsl(${h}, ${s}%, ${Math.min(l * 3, 75)}%)`;
-                this.element.style.strokeWidth = "1.5";
-                svg.fill(this.element, `hsl(${h}, ${s}%, ${lx}%)`);
-                svg.filter(this.element, `url(#neopixelglow)`);
-                return;
-            }
-            
-            // For the Menorah, we'll set all candles to the same color for now
-            // In the future, we could map different neopixel indices to different candles
             const hsl = visuals.rgbToHsl(rgb);
-            const [h, s, l] = hsl;
+            let [h, s, l] = hsl;
             const lx = Math.max(l * 1.3, 85);
-            
-            for (const candle of this.candles) {
-                // For the shamash, we might want to keep its original color
-                const isShamash = (candle.element.getAttribute('class') || '').includes('shamash');
-                if (isShamash) {
-                    // Optionally keep shamash color or apply a different effect
-                    // For now, we'll keep its original color
-                    continue;
-                }
-                
-                candle.element.style.stroke = `hsl(${h}, ${s}%, ${Math.min(l * 3, 75)}%)`;
-                candle.element.style.strokeWidth = "1.5";
-                svg.fill(candle.element, `hsl(${h}, ${s}%, ${lx}%)`);
-            }
+
+            // at least 10% luminosity
+            l = l * 90 / 100 + 10;
+            this.element.style.stroke = `hsl(${h}, ${s}%, ${Math.min(l * 3, 75)}%)`
+            this.element.style.strokeWidth = "1.5";
+            svg.fill(this.element, `hsl(${h}, ${s}%, ${lx}%)`);
+            svg.filter(this.element, `url(#neopixelglow)`);
         }
     }
 
