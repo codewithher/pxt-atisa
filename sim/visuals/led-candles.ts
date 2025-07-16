@@ -1,135 +1,101 @@
 /// <reference path="../../node_modules/pxt-core/built/pxtsim.d.ts"/>
 
 namespace pxsim.visuals {
-    export function mkLedMatrixSvg(xy: Coord, rows: number, cols: number):
-        { el: SVGGElement, y: number, x: number, w: number, h: number, leds: SVGElement[], ledsOuter: SVGElement[], background: SVGElement } {
-        let result: { el: SVGGElement, y: number, x: number, w: number, h: number, leds: SVGElement[], ledsOuter: SVGElement[], background: SVGElement }
-            = { el: null, y: 0, x: 0, w: 0, h: 0, leds: [], ledsOuter: [], background: null };
-        result.el = <SVGGElement>svg.elt("g");
-        let width = cols * PIN_DIST;
-        let height = rows * PIN_DIST;
-        let ledRad = Math.round(PIN_DIST * .35);
-        let spacing = PIN_DIST;
-        let padding = (spacing - 2 * ledRad) / 2.0;
-        let [x, y] = xy;
-        let left = x - (ledRad + padding);
-        let top = y - (ledRad + padding);
-        result.x = left;
-        result.y = top;
-        result.w = width;
-        result.h = height;
-        result.background = svg.child(result.el, "rect", { class: "sim-display", x: left, y: top, width: width, height: height })
-
-        // ledsOuter
-        result.leds = [];
-        result.ledsOuter = [];
-        let hoverRad = ledRad * 1.2;
-        for (let i = 0; i < rows; ++i) {
-            let y = top + ledRad + i * spacing + padding;
-            for (let j = 0; j < cols; ++j) {
-                let x = left + ledRad + j * spacing + padding;
-                result.ledsOuter.push(svg.child(result.el, "circle", { class: "sim-led-back", cx: x, cy: y, r: ledRad }));
-                result.leds.push(svg.child(result.el, "circle", { class: "sim-led", cx: x, cy: y, r: hoverRad, title: `(${j},${i})` }));
-            }
-        }
-
-        //default theme
-        svg.fill(result.background, defaultLedMatrixTheme.background);
-        svg.fills(result.leds, defaultLedMatrixTheme.ledOn);
-        svg.fills(result.ledsOuter, defaultLedMatrixTheme.ledOff);
-
-        //turn off LEDs
-        result.leds.forEach(l => (<SVGStyleElement><any>l).style.opacity = 0 + "");
-
-        return result;
+    export interface ICandleTheme {
+        candleOn?: string;
+        candleOff?: string;
     }
 
-    export interface ILedMatrixTheme {
-        background?: string;
-        ledOn?: string;
-        ledOff?: string;
-    }
-    export var defaultLedMatrixTheme: ILedMatrixTheme = {
-        background: "#000",
-        ledOn: "#ff5f5f",
-        ledOff: "#DDD",
+    export const defaultCandleTheme: ICandleTheme = {
+        candleOn: "#ff8c1a",  // Bright orange for lit candles
+        candleOff: "#4d4d4d"  // Dark gray for unlit candles
     };
 
-    export const LED_MATRIX_STYLE = `
-            .sim-led-back:hover {
-                stroke:#a0a0a0;
-                stroke-width:3px;
-            }
-            .sim-led:hover {
-                stroke:#ff7f7f;
-                stroke-width:3px;
-            }
-            `
+    export class CandleView {
+        public element: SVGGElement;
+        private candles: SVGCircleElement[] = [];
+        private theme: ICandleTheme;
+        private board: pxsim.DalBoard;
 
-    export class LedMatrixView implements IBoardPart<LedMatrixState> {
-        private background: SVGElement;
-        private ledsOuter: SVGElement[];
-        private leds: SVGElement[];
-        private state: LedMatrixState;
-        private bus: EventBus;
-        public element: SVGElement;
-        public defs: SVGElement[];
-        private theme: ILedMatrixTheme;
-
-        private DRAW_SIZE = 8;
-        private ACTIVE_SIZE = 5;
-
-        public style = LED_MATRIX_STYLE;
-
-        public init(bus: EventBus, state: LedMatrixState) {
-            this.bus = bus;
-            this.state = state;
-            this.theme = defaultLedMatrixTheme;
-            this.defs = [];
-            this.element = this.buildDom();
+        constructor() {
+            this.theme = {...defaultCandleTheme};
+            this.element = svg.elt("g", { class: "sim-candles" }) as SVGGElement;
+            this.board = (window as any).board as pxsim.DalBoard;
+            this.createCandles();
         }
 
-        public moveToCoord(xy: Coord) {
-            translateEl(this.element, xy);
+        private createCandles() {
+            // Create 7 candles (6 regular + 1 shamash, but we'll handle all the same for now)
+            for (let i = 0; i < 7; i++) {
+                const candle = svg.elt("circle", {
+                    r: 15,
+                    class: "sim-candle",
+                    fill: this.theme.candleOff
+                }) as SVGCircleElement;
+
+                // Position will be set by the parent component
+                this.candles.push(candle);
+                this.element.appendChild(candle);
+            }
         }
 
-        public updateTheme() {
-            svg.fill(this.background, this.theme.background);
-            svg.fills(this.leds, this.theme.ledOn);
-            svg.fills(this.ledsOuter, this.theme.ledOff);
+        private updateCandles() {
+            if (!this.candles.length) return;
+            
+            // Update all candles to their current theme state
+            this.candles.forEach(candle => {
+                // If we have a board and it's initialized, use the NeoPixel state
+                if (this.board) {
+                    const index = this.candles.indexOf(candle);
+                    const neopixel = this.board.neopixelState(index);
+                    if (neopixel) {
+                        const rgb = neopixel.pixelColor(0);
+                        if (rgb && (rgb[0] > 0 || rgb[1] > 0 || rgb[2] > 0)) {
+                            // If pixel has color, use it
+                            svg.fill(candle, `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
+                            return;
+                        }
+                    }
+                }
+                
+                // Otherwise use the theme's off color
+                svg.fill(candle, this.theme.candleOff);
+            });
+        }
+
+        public updateTheme(theme?: ICandleTheme) {
+            if (theme) {
+                this.theme = {...defaultCandleTheme, ...theme};
+            }
+            this.updateCandles();
         }
 
         public updateState() {
-            if (this.state.disabled) {
-                this.leds.forEach((led, i) => {
-                    let sel = (<SVGStyleElement><any>led)
-                    sel.style.opacity = 0 + "";
-                });
-                return;
-            }
+            if (!this.board) return;
 
-            const bw = this.state.displayMode == pxsim.DisplayMode.bw
-            const img = this.state.image;
-            this.leds.forEach((led, i) => {
-                let sel = (<SVGStyleElement><any>led)
-                let dx = i % this.DRAW_SIZE;
-                let dy = (i - dx) / this.DRAW_SIZE;
-                if (dx < this.ACTIVE_SIZE && dy < this.ACTIVE_SIZE) {
-                    let j = dx + dy * this.ACTIVE_SIZE;
-                    sel.style.opacity = ((bw ? img.data[j] > 0 ? 255 : 0 : img.data[j]) / 255.0) + "";
-                } else {
-                    sel.style.opacity = 0 + "";
+            // Update each candle based on NeoPixel state
+            this.candles.forEach((candle, index) => {
+                const neopixel = this.board.neopixelState(index);
+                if (neopixel) {
+                    const rgb = neopixel.pixelColor(0); // Get first pixel in strip
+                    if (rgb && (rgb[0] > 0 || rgb[1] > 0 || rgb[2] > 0)) {
+                        // If the pixel has color, use it
+                        svg.fill(candle, `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
+                    } else {
+                        // Otherwise use the theme's off color
+                        svg.fill(candle, this.theme.candleOff);
+                    }
                 }
-            })
+            });
         }
 
-        public buildDom() {
-            let res = mkLedMatrixSvg([0, 0], this.DRAW_SIZE, this.DRAW_SIZE);
-            let display = res.el;
-            this.background = res.background;
-            this.leds = res.leds;
-            this.ledsOuter = res.ledsOuter;
-            return display;
+        public setPositions(positions: {x: number, y: number}[]) {
+            positions.forEach((pos, index) => {
+                if (index < this.candles.length) {
+                    this.candles[index].setAttribute('cx', pos.x.toString());
+                    this.candles[index].setAttribute('cy', pos.y.toString());
+                }
+            });
         }
     }
 }
