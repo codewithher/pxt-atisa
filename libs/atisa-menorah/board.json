@@ -89,66 +89,26 @@
         "label": "NEOPIXEL"
       },
       {
-        "id": "candle0",
-        "x": 100,
-        "y": 200,
+        "id": "candles",
+        "x": 0,
+        "y": 0,
         "r": 15,
         "color": "neopixel",
-        "label": "NEOPIXEL0"
-      },
-      {
-        "id": "candle1",
-        "x": 140,
-        "y": 180,
-        "r": 15,
-        "color": "neopixel",
-        "label": "NEOPIXEL1"
-      },
-      {
-        "id": "candle2",
-        "x": 180,
-        "y": 160,
-        "r": 15,
-        "color": "neopixel",
-        "label": "NEOPIXEL2"
-      },
-      {
-        "id": "candle3",
-        "x": 220,
-        "y": 140,
-        "r": 15,
-        "color": "neopixel",
-        "label": "NEOPIXEL3"
-      },
-      {
-        "id": "candle4",
-        "x": 260,
-        "y": 160,
-        "r": 15,
-        "color": "neopixel",
-        "label": "NEOPIXEL4"
-      },
-      {
-        "id": "candle5",
-        "x": 300,
-        "y": 180,
-        "r": 15,
-        "color": "neopixel",
-        "label": "NEOPIXEL5"
-      },
-      {
-        "id": "candle6",
-        "x": 340,
-        "y": 200,
-        "r": 15,
-        "color": "neopixel",
-        "label": "NEOPIXEL6"
+        "label": "CANDLES",
+        "numPixels": 7
       }
     ],
+    "candles": [
+      {"x": 256.64, "y": 356.252, "index": 0},
+      {"x": 265.278, "y": 356.252, "index": 1},
+      {"x": 273.629, "y": 356.252, "index": 2},
+      {"x": 284.647, "y": 356.252, "index": 3},
+      {"x": 295.231, "y": 356.252, "index": 4},
+      {"x": 304.249, "y": 356.252, "index": 5},
+      {"x": 312.257, "y": 356.214, "index": 6}
+    ],
     "touchPads": [],
-    "buttons": [],
-    "candles": [ 
-    ]
+    "buttons": []
   },
   "gpioPinMap": {
     "VBAT": "VBAT",
@@ -177,13 +137,7 @@
     "D0": "A2_D0_SDA",
     "SDA": "A2_D0_SDA",
     "LED": "LED",
-    "NEOPIXEL0": "NEOPIXEL0",
-    "NEOPIXEL1": "NEOPIXEL1",
-    "NEOPIXEL2": "NEOPIXEL2",
-    "NEOPIXEL3": "NEOPIXEL3",
-    "NEOPIXEL4": "NEOPIXEL4",
-    "NEOPIXEL5": "NEOPIXEL5",
-    "NEOPIXEL6": "NEOPIXEL6"
+    "NEOPIXEL": "NEOPIXEL"
   },
   "groundPins": [
     "GND"

@@ -13,6 +13,9 @@
 			"path": "../pxt-neopixel"
 		},
 		{
+			"path": "../pxt-microbit"
+		},
+		{
 			"path": "."
 		}
 	]

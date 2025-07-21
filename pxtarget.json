@@ -8,6 +8,7 @@
     "corepkg": "core",
     "bundleddirs": [
         "libs/atisa-menorah",
+        "libs/neopixel",
         "libs/base",
         "libs/base---light",
         "libs/core",
@@ -107,6 +108,9 @@
         "libs/jacdac-brain-rp2040",
         "libs/jacdac-iot-s2"
     ],
+    "bundledpkgs": {
+        "neopixel": "github:microsoft/pxt-neopixel#v0.7.5"
+    },
     "serial": {
         "useHF2": true,
         "useEditor": true,

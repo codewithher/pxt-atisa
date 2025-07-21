@@ -72,19 +72,16 @@ namespace pxsim.visuals {
 
         public updateState() {
             if (!this.board) return;
-
-            // Update each candle based on NeoPixel state
+    
+            const neopixel = this.board.neopixelState(0); // Get the single NeoPixel strip
+            if (!neopixel) return;
+    
             this.candles.forEach((candle, index) => {
-                const neopixel = this.board.neopixelState(index);
-                if (neopixel) {
-                    const rgb = neopixel.pixelColor(0); // Get first pixel in strip
-                    if (rgb && (rgb[0] > 0 || rgb[1] > 0 || rgb[2] > 0)) {
-                        // If the pixel has color, use it
-                        svg.fill(candle, `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
-                    } else {
-                        // Otherwise use the theme's off color
-                        svg.fill(candle, this.theme.candleOff);
-                    }
+                const rgb = neopixel.pixelColor(index); // Get color for this candle's position
+                if (rgb && (rgb[0] > 0 || rgb[1] > 0 || rgb[2] > 0)) {
+                    svg.fill(candle, `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
+                } else {
+                    svg.fill(candle, this.theme.candleOff);
                 }
             });
         }
