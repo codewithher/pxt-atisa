@@ -8,7 +8,6 @@
     "corepkg": "core",
     "bundleddirs": [
         "libs/atisa-menorah",
-        "libs/neopixel",
         "libs/base",
         "libs/base---light",
         "libs/core",

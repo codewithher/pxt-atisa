@@ -90,12 +90,18 @@
       },
       {
         "id": "candles",
-        "x": 0,
-        "y": 0,
-        "r": 15,
-        "color": "neopixel",
+        "x": 284.647,
+        "y": 300,
+        "width": 100,
+        "height": 100,
+        "color": "0xff0000",
         "label": "CANDLES",
-        "numPixels": 7
+        "numPixels": 7,
+        "type": "strip",
+        "startX": 256.64,
+        "startY": 356.252,
+        "endX": 312.257,
+        "endY": 356.252
       }
     ],
     "candles": [

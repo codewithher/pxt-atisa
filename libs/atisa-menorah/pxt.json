@@ -5,17 +5,19 @@
         "README.md",
         "device.d.ts",
         "config.ts",
+        "lantern.ts",
         "board.json",
         "board.svg"
     ],
     "core": true,
     "dependencies": {
-        "core---samd": "file:../core---samd",
-        "buttons": "file:../buttons",
+        "core": "file:../core",
         "light": "file:../light",
+        "pixel": "file:../pixel",
+        "core---samd": "file:../core---samd",
         "mixer---samd": "file:../mixer---samd",
-        "touch": "file:../touch",
-        "pixel": "file:../pixel"
+        "buttons": "file:../buttons",
+        "touch": "file:../touch"
     },
     "public": true,
     "compileServiceVariant": "samd21",
@@ -35,6 +37,15 @@
         "touchd1",
         "light",
         "jacdac",
-        "music"
-    ]
+        "music",
+        "lantern"
+    ],
+    "simulator": {
+        "runtime": {
+            "include": "sim/register"
+        },
+        "visualization": {
+            "include": "sim/visual"
+        }
+    }
 }
