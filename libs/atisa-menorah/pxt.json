@@ -9,9 +9,17 @@
         "board.json",
         "board.svg"
     ],
+    "additionalFilePath": "./include",
+    "include": [
+        "atisa_menorah.h"
+    ],
     "core": true,
+    "dalDTS": {
+        "includeDirs": [
+            "include"
+        ]
+    },
     "dependencies": {
-        "core": "file:../core",
         "light": "file:../light",
         "pixel": "file:../pixel",
         "core---samd": "file:../core---samd",

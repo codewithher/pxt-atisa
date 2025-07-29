@@ -1,6 +1,6 @@
-//% color=#0fbc11 icon="\uf06d" weight=90
+//% color="#FF5533" icon="\uf06d" weight=90
 namespace lantern {
-    let strip: light.LightStrip = light.onboardStrip();
+    let strip: light.LightStrip;
     
     // Initialize the NeoPixel strip if not already done
     function initStrip() {

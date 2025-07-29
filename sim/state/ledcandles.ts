@@ -2,7 +2,7 @@
 
 console.log("LED Candles state module loaded");
 
-namespace pxsim {
+namespace pxsim.lantern {
     // Represents the state of an individual candle
     export interface CandleState {
         isLit: boolean;
@@ -14,16 +14,13 @@ namespace pxsim {
     export class LEDCandlesState {
         private candles: CandleState[] = [];
         private changed = true;
-        private pin: Pin;
         private maxCandles: number;
 
-        constructor(pin: Pin, maxCandles: number = 9) {
-            this.pin = pin;
+        constructor(maxCandles: number = 9) {
             this.maxCandles = maxCandles;
             this.initializeCandles();
         }
 
-        // Initialize all candles to unlit state
         private initializeCandles() {
             this.candles = [];
             for (let i = 0; i < this.maxCandles; i++) {
@@ -95,7 +92,17 @@ namespace pxsim {
 
     // Register the LED candles state with the runtime
     export function ledCandlesState(): LEDCandlesState {
-        return (board() as any).ledCandlesState as LEDCandlesState;
+        const b = board() as any;
+        if (!b.ledCandlesState) {
+            // If not initialized yet, try to get it from the DalBoard instance
+            if (b && b.board && b.board.ledCandlesState) {
+                b.ledCandlesState = b.board.ledCandlesState;
+            } else {
+                console.warn("LED Candles state not initialized yet");
+                return undefined;
+            }
+        }
+        return b.ledCandlesState as LEDCandlesState;
     }
 }
 

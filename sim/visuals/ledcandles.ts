@@ -2,7 +2,7 @@
 
 console.log("LED Candles visuals module loaded");
 
-namespace pxsim.visuals {
+namespace pxsim.lantern {
     export interface ICandleTheme {
         candleOn?: string;      // Color when candle is lit
         candleOff?: string;     // Color when candle is unlit

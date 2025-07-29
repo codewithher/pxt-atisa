@@ -268,7 +268,7 @@ namespace pxsim.visuals {
         updateState() {
             const opacity = this.pin.mode & PinFlags.Digital ? (this.pin.value > 0 ? 1 : 0)
                 : 0.1 + Math.max(0, Math.min(1023, this.pin.value)) / 1023 * 0.8;
-            this.ledElement.setAttribute("opacity", opacity.toString())
+            this.ledElement.setAttribute("opacity", opacity.toString());
         }
     }
 
@@ -278,7 +278,12 @@ namespace pxsim.visuals {
 
         constructor(name: string, x: number, y: number, r: number) {
             this.name = name;
-            this.element = svg.elt("circle", { cx: x + r / 2, cy: y + r / 2, r: 10 }) as SVGCircleElement
+            this.element = svg.elt("circle", { 
+                cx: x + r / 2, 
+                cy: y + r / 2, 
+                r: 10,
+                class: "sim-candle"
+            }) as SVGCircleElement;
             svg.title(this.element, name);
         }
 

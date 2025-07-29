@@ -1,7 +1,3 @@
-<!-- This file is generated from pxtarget.json during "pxt serve". Do not edit. -->
-
-
-
 # Projects
 
 ```codecard
@@ -57,3 +53,4 @@
 [My Gallery](/projects/my-gallery),
 [Adafruit](/boards/adafruit),
 [Analog IO](/projects/analog-io)
+

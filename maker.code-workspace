@@ -16,6 +16,9 @@
 			"path": "../pxt-microbit"
 		},
 		{
+			"path": "../pxt-sample"
+		},
+		{
 			"path": "."
 		}
 	]

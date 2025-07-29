@@ -43,8 +43,9 @@
         "typescript": "4.8.3"
     },
     "dependencies": {
+        "node-hid": "^3.2.0",
         "pxt-common-packages": "12.3.30",
-        "pxt-core": "11.4.8", 
+        "pxt-core": "11.4.8",
         "usb": "^2.15.0"
     },
     "scripts": {
