@@ -50,7 +50,7 @@ namespace pxsim {
         lcdState: LCDState;
         radioState: RadioState;
         controlMessageState: ControlMessageState;
-        ledCandlesState: any; // Will be of type LEDCandlesState
+        // ledCandlesState: any; // Will be of type LEDCandlesState
 
         constructor(public boardDefinition: BoardDefinition) {
             super();
@@ -179,12 +179,12 @@ namespace pxsim {
             this.builtinVisuals["pixels"] = () => new visuals.NeoPixelView(parsePinString);
             this.builtinPartVisuals["pixels"] = (xy: visuals.Coord) => visuals.mkNeoPixelPart(xy);
 
-            // Initialize LED candles state with the first available pin
-            const ledCandlesPin = this.edgeConnectorState.getPin(pinList[0]) || this.edgeConnectorState.getPin(getConfig(DAL.CFG_PIN_LED));
-            if (ledCandlesPin) {
-                this.ledCandlesState = new pxsim.LEDCandlesState(ledCandlesPin, 9); // Default to 9 candles
-                (this as any).ledCandlesState = this.ledCandlesState; // Make it available globally
-            }
+            // // Initialize LED candles state with the first available pin
+            // const ledCandlesPin = this.edgeConnectorState.getPin(pinList[0]) || this.edgeConnectorState.getPin(getConfig(DAL.CFG_PIN_LED));
+            // if (ledCandlesPin) {
+            //     this.ledCandlesState = new pxsim.LEDCandlesState(ledCandlesPin, 9); // Default to 9 candles
+            //     (this as any).ledCandlesState = this.ledCandlesState; // Make it available globally
+            // }
         }
 
         kill() {

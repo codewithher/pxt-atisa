@@ -5,13 +5,8 @@
         "README.md",
         "device.d.ts",
         "config.ts",
-        "lantern.ts",
         "board.json",
         "board.svg"
-    ],
-    "additionalFilePath": "./include",
-    "include": [
-        "atisa_menorah.h"
     ],
     "core": true,
     "dalDTS": {
@@ -45,8 +40,7 @@
         "touchd1",
         "light",
         "jacdac",
-        "music",
-        "lantern"
+        "music"
     ],
     "simulator": {
         "runtime": {

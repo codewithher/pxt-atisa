@@ -1,5 +1,6 @@
-# Projects
+<!-- This file is generated from pxtarget.json during "pxt serve". Do not edit. -->
 
+# Projects
 * [Parole](/projects/parole)
   * [ex1](/projects/parole/ex1)
   * [ex2](/projects/parole/ex2)
