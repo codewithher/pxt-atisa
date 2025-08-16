@@ -6,7 +6,7 @@ set -euo pipefail
 [ -d libs/pxt-library ] || git clone --depth 1 https://github.com/codewithher/pxt-library libs/pxt-library
 
 # 2) Build your PXT fork once so the target can link to it
-( cd deps/pxt && npm ci && npm run build )
+( cd deps/pxt && npm install && npm run build )
 
 # 3) Link to your local forks (keep npm pxt-core for the CLI; invoke via npx)
 npx pxt link ./deps/pxt
