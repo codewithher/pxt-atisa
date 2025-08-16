@@ -1,0 +1,6 @@
+[submodule "deps/pxt"]
+	path = deps/pxt
+	url = https://github.com/codewithher/pxt
+[submodule "libs/pxt-library"]
+	path = libs/pxt-library
+	url = https://github.com/codewithher/pxt-library
