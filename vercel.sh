@@ -1,26 +1,28 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# 1) Ensure the dependencies are present (works with or without submodules)
+# 1) Ensure forks exist (works with or without submodules)
 [ -d deps/pxt ] || git clone --depth 1 https://github.com/codewithher/pxt deps/pxt
 [ -d libs/pxt-library ] || git clone --depth 1 https://github.com/codewithher/pxt-library libs/pxt-library
 
-echo "step 1" 
+echo "step 1 done"
 
-# 2) Build your PXT fork once so the target can link to it
-( cd deps/pxt && npm install && npm run build )
+# 2) Build your PXT fork
+( cd deps/pxt
+  if [ -f package-lock.json ]; then npm ci; else npm install; fi
+  npm run build
+)
 
-echo "step 2"
+echo "step 2 done"
 
-# 3) Link to your local forks (keep npm pxt-core for the CLI; invoke via npx)
-npx pxt link ./deps/pxt
-# Your library is already under libs/, and will be bundled via `bundleddirs`,
-# but linking is harmless if you want it treated as a local package too:
-npx pxt link ./libs/pxt-library || true
+# 3) Use your fork's CLI directly (no 'npx', no 'link')
+PXT_CLI="node $(pwd)/deps/pxt/built/pxt.js"
+$PXT_CLI --version || true
 
-echo "step 3"
+echo "step 3 done"
 
-# 4) Produce the static site for Vercel to serve
-npx pxt staticpkg --minify -o public
+# 4) Produce the static site
+$PXT_CLI staticpkg --minify -o public
+# If you need a subpath:  $PXT_CLI staticpkg --route atisa -o public
 
-echo "step 4" 
+echo "step 4 done" 
