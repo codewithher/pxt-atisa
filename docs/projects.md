@@ -5,22 +5,22 @@
     {
         "name": "Parole",
         "url": "/projects/parole",
-        "imageUrl": "/static/projects/digital-io/blinky/gallery.png"
+        "imageUrl": "/static/projects/parole/replace/parole_test.gif"
     },
     {
         "name": "Hanukkah",
         "url": "/projects/hanukkah",
-        "imageUrl": "/static/projects/digital-io/blinky/gallery.png"
+        "imageUrl": "/static/projects/kwanzaa/replace/kwanzaa_test.gif"
     },
     {
         "name": "Christmas",
         "url": "/projects/christmas",
-        "imageUrl": "/static/projects/digital-io/blinky/gallery.png"
+        "imageUrl": "/static/projects/christmas/replace/christmas_test.gif"
     },
     {
         "name": "Kwanzaa",
         "url": "/projects/kwanzaa",
-        "imageUrl": "/static/projects/digital-io/blinky/gallery.png"
+        "imageUrl": "/static/projects/kwanzaa/replace/kwanzaa_test.gif"
     },
     {
         "name": "My Gallery",
