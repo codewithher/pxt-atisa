@@ -18,6 +18,7 @@ Here are some cool activities to get you started with your @boardname@!
 - description: This links to a youtube playlist
 - imageUrl: /static/herogallery/placeholder3.png
 - youTubePlaylistId: PLMMBk9hE-SeqDYtw9pGNPsQ10V_EGMyGe
+- cardType: link
 
 ---
 
@@ -41,5 +42,6 @@ Here are some cool activities to get you started with your @boardname@!
 - description: This links to a youtube video
 - imageUrl: /static/herogallery/placeholder5.png
 - youTubeId: qqBmvHD5bCw
+- cardType: link
 
 ### ~
