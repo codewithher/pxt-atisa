@@ -1,7 +1,7 @@
 {
     "name": "{0}",
     "dependencies": {
-        "adafruit-itsybitsy-m4-express": "file:../adafruit-itsybitsy-m4-express"
+        "adafruit-itsybitsy-m0-express": "file:../adafruit-itsybitsy-m0-express"
     },
     "description": "",
     "files": [
