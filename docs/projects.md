@@ -1,3 +1,7 @@
+<!-- This file is generated from pxtarget.json during "pxt serve". Do not edit. -->
+
+
+
 # Projects
 
 ```codecard
@@ -23,23 +27,9 @@
         "imageUrl": "/static/projects/digital-io/blinky/gallery.png"
     },
     {
-        "name": "My Gallery",
-        "url": "/projects/my-gallery",
-        "imageUrl": "/static/projects/digital-io/blinky/gallery.png",
-        "largeImageUrl": "/static/projects/analog-io/blink-to-light/gallery.gif",
-        "videoUrl": "/static/projects/analog-io/blink-to-light/gallery.mp4"
-    },
-    {
-        "name": "Adafruit",
+        "name": "Adafruit Boards",
         "url": "/boards/adafruit",
-        "imageUrl": "/static/libs/adafruit-metro-m0-express.jpg"
-    },
-    {
-        "name": "Analog IO",
-        "url": "/projects/analog-io",
-        "imageUrl": "/static/projects/analog-io/blink-to-light/gallery.png",
-        "largeImageUrl": "/static/projects/analog-io/blink-to-light/gallery.gif",
-        "videoUrl": "/static/projects/analog-io/blink-to-light/gallery.mp4"
+        "imageUrl": "/static/libs/adafruit-itsybitsy-m0-express.jpg"
     }
 ]
 ```
@@ -50,7 +40,4 @@
 [Hanukkah](/projects/hanukkah),
 [Christmas](/projects/christmas),
 [Kwanzaa](/projects/kwanzaa),
-[My Gallery](/projects/my-gallery),
-[Adafruit](/boards/adafruit),
-[Analog IO](/projects/analog-io)
-
+[Adafruit Boards](/boards/adafruit)

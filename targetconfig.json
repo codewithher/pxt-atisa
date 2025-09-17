@@ -49,8 +49,6 @@
     "Hanukkah": "/projects/hanukkah",
     "Christmas": "/projects/christmas",
     "Kwanzaa": "/projects/kwanzaa",
-    "My Gallery": "/projects/my-gallery",
-    "Adafruit": "/boards/adafruit",
-    "Analog IO": "/projects/analog-io"
+    "Adafruit Boards": "/boards/adafruit"
   }
 }
