@@ -44,7 +44,7 @@
     ],
     "simulator": {
         "runtime": {
-            "include": "sim/register"
+            "include": "sim/visual"
         },
         "visualization": {
             "include": "sim/visual"
