@@ -8,6 +8,7 @@
     "corepkg": "core",
     "bundleddirs": [
         "libs/atisa-menorah",
+        "libs/atisa-kwanza",
         "libs/base",
         "libs/base---light",
         "libs/core",

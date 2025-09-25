@@ -1,0 +1,53 @@
+{
+    "name": "atisa-menorah",
+    "description": "Support for ATISA Menorah",
+    "files": [
+        "README.md",
+        "device.d.ts",
+        "config.ts",
+        "board.json",
+        "board.svg"
+    ],
+    "core": true,
+    "dalDTS": {
+        "includeDirs": [
+            "include"
+        ]
+    },
+    "dependencies": {
+        "light": "file:../light",
+        "pixel": "file:../pixel",
+        "core---samd": "file:../core---samd",
+        "mixer---samd": "file:../mixer---samd",
+        "buttons": "file:../buttons",
+        "touch": "file:../touch"
+    },
+    "public": true,
+    "compileServiceVariant": "samd21",
+    "firmwareUrl": "https://learn.adafruit.com/adafruit-feather-m0-express-designed-for-circuit-python-circuitpython/uf2-bootloader-details#updating-the-bootloader",
+    "features": [
+        "uf2",
+        "i2c",
+        "pixel",
+        "pinled",
+        "pind0",
+        "pind1",
+        "pina0",
+        "pina1",
+        "buttond0",
+        "buttond1",
+        "touchd0",
+        "touchd1",
+        "light",
+        "jacdac",
+        "music"
+    ],
+    "simulator": {
+        "runtime": {
+            "include": "sim/visual"
+        },
+        "visualization": {
+            "include": "sim/visual"
+        }
+    }
+}
