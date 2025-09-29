@@ -13,9 +13,6 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NS: ${{ github.repository }}
-  DEPS_IMAGE_TAG: pxt-deps:main
-  SITE_IMAGE_TAG: pxt-site:ci
 
 jobs:
   build:
@@ -24,11 +21,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-        with:
-          install: true
-          driver: docker-container
+      - name: Compute lower-case namespace
+        id: ns
+        run: |
+          # github.repository is Owner/Repo; make it lower-case for GHCR
+          echo "image_ns=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
 
       - name: Set env for branch
         id: br
@@ -36,10 +33,18 @@ jobs:
           if [ "${GITHUB_REF_NAME}" = "main" ]; then
             echo "env=production" >> $GITHUB_OUTPUT
             echo "atisa_ref=main" >> $GITHUB_OUTPUT
+            echo "deps_tag=pxt-deps:main" >> $GITHUB_OUTPUT
           else
             echo "env=staging" >> $GITHUB_OUTPUT
             echo "atisa_ref=staging" >> $GITHUB_OUTPUT
+            # still reuse the same deps tag (or make a pxt-deps:staging if you prefer)
+            echo "deps_tag=pxt-deps:main" >> $GITHUB_OUTPUT
           fi
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: docker-container
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
@@ -52,7 +57,7 @@ jobs:
         id: pull-deps
         continue-on-error: true
         run: |
-          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NS }}/${{ env.DEPS_IMAGE_TAG }}
+          docker pull ${{ env.REGISTRY }}/${{ steps.ns.outputs.image_ns }}/${{ steps.br.outputs.deps_tag }}
 
       - name: Build & push deps image (fallback)
         if: steps.pull-deps.outcome != 'success'
@@ -60,8 +65,9 @@ jobs:
         with:
           context: .
           file: Dockerfile.deps
+          platforms: linux/amd64
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NS }}/${{ env.DEPS_IMAGE_TAG }}
+          tags: ${{ env.REGISTRY }}/${{ steps.ns.outputs.image_ns }}/${{ steps.br.outputs.deps_tag }}
           build-args: |
             PXT_REF=main
             PXT_LIB_REF=main
@@ -72,17 +78,18 @@ jobs:
         with:
           context: .
           file: Dockerfile.site
+          platforms: linux/amd64
           push: false
-          tags: ${{ env.SITE_IMAGE_TAG }}
+          tags: pxt-site:ci
           build-args: |
-            DEPS_IMAGE=${{ env.REGISTRY }}/${{ env.IMAGE_NS }}/${{ env.DEPS_IMAGE_TAG }}
+            DEPS_IMAGE=${{ env.REGISTRY }}/${{ steps.ns.outputs.image_ns }}/${{ steps.br.outputs.deps_tag }}
             ATISA_REF=${{ steps.br.outputs.atisa_ref }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Extract /out/site to workspace
         run: |
-          cid=$(docker create ${{ env.SITE_IMAGE_TAG }})
+          cid=$(docker create pxt-site:ci)
           docker cp "$cid":/out/site/. site/
           docker rm "$cid"
           ls -lah site || true
@@ -100,7 +107,6 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: staging
-      url: ${{ steps.deployment.outputs.page_url }}
     permissions:
       pages: write
       id-token: write
@@ -110,15 +116,23 @@ jobs:
         with:
           name: site-staging
           path: ./site
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./site
-      - name: Deploy to GitHub Pages (staging)
+
+      - name: Deploy to GitHub Pages (staging preview)
         id: deployment
         uses: actions/deploy-pages@v4
         with:
           preview: true
+
+      - name: Show preview URL
+        run: echo "Preview URL: ${{ steps.deployment.outputs.page_url }}"
 
   deploy_production:
     if: github.ref_name == 'main'
@@ -126,7 +140,6 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: ${{ steps.deployment.outputs.page_url }}
     permissions:
       pages: write
       id-token: write
@@ -136,10 +149,18 @@ jobs:
         with:
           name: site-main
           path: ./site
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./site
+
       - name: Deploy to GitHub Pages (production)
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Show production URL
+        run: echo "Production URL: ${{ steps.deployment.outputs.page_url }}"
