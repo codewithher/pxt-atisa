@@ -1,0 +1,139 @@
+name: Build & Deploy PXT Static Site
+
+on:
+  push:
+    branches: [staging, main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  packages: write
+  pages: write
+  id-token: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NS: ${{ github.repository }}
+  DEPS_IMAGE_TAG: pxt-deps:main
+  SITE_IMAGE_TAG: pxt-site:ci
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set env for branch
+        id: br
+        run: |
+          if [ "${GITHUB_REF_NAME}" = "main" ]; then
+            echo "env=production" >> $GITHUB_OUTPUT
+            echo "atisa_ref=main" >> $GITHUB_OUTPUT
+          else
+            echo "env=staging" >> $GITHUB_OUTPUT
+            echo "atisa_ref=staging" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Try pull deps image
+        id: pull-deps
+        continue-on-error: true
+        run: |
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NS }}/${{ env.DEPS_IMAGE_TAG }}
+
+      - name: Build & push deps image (fallback)
+        if: steps.pull-deps.outcome != 'success'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile.deps
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NS }}/${{ env.DEPS_IMAGE_TAG }}
+          build-args: |
+            PXT_REF=main
+            PXT_LIB_REF=main
+            ATISA_REF=${{ steps.br.outputs.atisa_ref }}
+
+      - name: Build site image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile.site
+          push: false
+          tags: ${{ env.SITE_IMAGE_TAG }}
+          build-args: |
+            DEPS_IMAGE=${{ env.REGISTRY }}/${{ env.IMAGE_NS }}/${{ env.DEPS_IMAGE_TAG }}
+            ATISA_REF=${{ steps.br.outputs.atisa_ref }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Extract /out/site to workspace
+        run: |
+          cid=$(docker create ${{ env.SITE_IMAGE_TAG }})
+          docker cp "$cid":/out/site/. site/
+          docker rm "$cid"
+          ls -lah site || true
+          ls -lah site/static || true
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-${{ github.ref_name }}
+          path: site
+
+  deploy_staging:
+    if: github.ref_name == 'staging'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Download site artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: site-staging
+          path: ./site
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./site
+      - name: Deploy to GitHub Pages (staging)
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          preview: true
+
+  deploy_production:
+    if: github.ref_name == 'main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Download site artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: site-main
+          path: ./site
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./site
+      - name: Deploy to GitHub Pages (production)
+        id: deployment
+        uses: actions/deploy-pages@v4
