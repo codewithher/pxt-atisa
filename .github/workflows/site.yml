@@ -132,7 +132,8 @@ jobs:
           preview: true
 
       - name: Show preview URL
-        run: echo "Preview URL: ${{ steps.deployment.outputs.page_url }}"
+        run: |
+          echo "Preview URL: ${{ steps.deployment.outputs.page_url }}"
 
   deploy_production:
     if: github.ref_name == 'main'
@@ -163,4 +164,5 @@ jobs:
         uses: actions/deploy-pages@v4
 
       - name: Show production URL
-        run: echo "Production URL: ${{ steps.deployment.outputs.page_url }}"
+        run: |
+          echo "Production URL: ${{ steps.deployment.outputs.page_url }}"
