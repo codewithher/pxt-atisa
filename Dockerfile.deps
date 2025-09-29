@@ -1,0 +1,37 @@
+# Toolchain + built PXT + prepared pxt-atisa workspace
+FROM node:18-bullseye
+
+# System deps commonly needed by PXT & native modules
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git python3 make g++ libusb-1.0-0-dev ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt/work
+
+# Clone repos (use your forks/branches via build args if desired)
+ARG PXT_URL=https://github.com/codewithher/pxt
+ARG PXT_LIB_URL=https://github.com/codewithher/pxt-library
+ARG ATISA_URL=https://github.com/codewithher/pxt-atisa
+ARG PXT_REF=main
+ARG PXT_LIB_REF=main
+ARG ATISA_REF=main
+
+RUN git clone --branch ${PXT_REF} --depth 1 ${PXT_URL} pxt \
+    && git clone --branch ${PXT_LIB_REF} --depth 1 ${PXT_LIB_URL} pxt-library \
+    && git clone --branch ${ATISA_REF} --depth 1 ${ATISA_URL} pxt-atisa
+
+# Build pxt
+RUN cd pxt && npm install && npm run build
+
+# Install pxt-library deps
+RUN cd pxt-library && npm install
+
+# Prep pxt-atisa: install CLI globally, link repos, and re-install deps
+RUN npm i -g --unsafe-perm pxt \
+    && cd /opt/work/pxt-atisa \
+    && pxt link ../pxt \
+    && pxt link ../pxt-library \
+    && rm -rf node_modules/pxt-core node_modules/pxt-library \
+    && npm install
+
+WORKDIR /opt/work

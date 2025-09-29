@@ -1,0 +1,29 @@
+# Build the static site using the prepared deps image
+ARG DEPS_IMAGE=pxt-deps:latest
+FROM ${DEPS_IMAGE}
+
+WORKDIR /opt/work
+
+# Optionally update to the latest pxt-atisa (branch selectable)
+ARG ATISA_REF=main
+RUN cd pxt-atisa \
+    && git fetch origin \
+    && git checkout ${ATISA_REF} \
+    && git pull --ff-only origin ${ATISA_REF}
+
+# Build static package and assert output exists
+RUN cd pxt-atisa \
+    && pxt staticpkg \
+    && test -d built/packaged \
+    && ls -lah built/packaged
+
+# Collect artifacts
+RUN mkdir -p /out/site \
+    && cp -R pxt-atisa/built/packaged/* /out/site/
+
+# Merge docs/static into /out/site/static (copy contents, not the folder itself)
+RUN mkdir -p /out/site/static \
+    && cp -R pxt-atisa/docs/static/. /out/site/static/
+
+# Show what we produced by default
+CMD ["bash","-lc","ls -la /out/site && echo 'Output at /out/site'"]
