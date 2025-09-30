@@ -20,6 +20,11 @@ RUN git clone --branch ${PXT_REF} --depth 1 ${PXT_URL} pxt \
     && git clone --branch ${PXT_LIB_REF} --depth 1 ${PXT_LIB_URL} pxt-library \
     && git clone --branch ${ATISA_REF} --depth 1 ${ATISA_URL} pxt-atisa
 
+# Allow fetching any branch later (prevents single-branch fetch pitfalls)
+RUN cd /opt/work/pxt-atisa \
+    && git remote set-branches origin '*' \
+    && git fetch --depth 1 origin ${ATISA_REF}
+
 # Build pxt
 RUN cd pxt && npm install && npm run build
 

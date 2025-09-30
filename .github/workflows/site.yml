@@ -1,4 +1,4 @@
-name: Build & Deploy PXT Static Site
+name: Build & Deploy (staging/main)
 
 on:
   push:
@@ -7,116 +7,57 @@ on:
 
 permissions:
   contents: read
-  packages: write
-  pages: write
-  id-token: write
+  packages: write # pull from GHCR with GITHUB_TOKEN
+  pages: write # deploy GitHub Pages
+  id-token: write # required by deploy-pages
 
 env:
   REGISTRY: ghcr.io
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Compute lower-case namespace
+      # Lowercase repo path for GHCR (required)
+      - name: Compute namespace
         id: ns
-        run: |
-          # github.repository is Owner/Repo; make it lower-case for GHCR
-          echo "image_ns=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+        run: echo "image_ns=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
 
-      - name: Set env for branch
-        id: br
-        run: |
-          if [ "${GITHUB_REF_NAME}" = "main" ]; then
-            echo "env=production" >> $GITHUB_OUTPUT
-            echo "atisa_ref=main" >> $GITHUB_OUTPUT
-            echo "deps_tag=pxt-deps:main" >> $GITHUB_OUTPUT
-          else
-            echo "env=staging" >> $GITHUB_OUTPUT
-            echo "atisa_ref=staging" >> $GITHUB_OUTPUT
-            # still reuse the same deps tag (or make a pxt-deps:staging if you prefer)
-            echo "deps_tag=pxt-deps:main" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-        with:
-          driver: docker-container
-
-      - name: Log in to GHCR
+      - name: Login to GHCR
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Try pull deps image
-        id: pull-deps
-        continue-on-error: true
-        run: |
-          docker pull ${{ env.REGISTRY }}/${{ steps.ns.outputs.image_ns }}/${{ steps.br.outputs.deps_tag }}
-
-      - name: Build & push deps image (fallback)
-        if: steps.pull-deps.outcome != 'success'
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: Dockerfile.deps
-          platforms: linux/amd64
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ steps.ns.outputs.image_ns }}/${{ steps.br.outputs.deps_tag }}
-          build-args: |
-            PXT_REF=main
-            PXT_LIB_REF=main
-            ATISA_REF=${{ steps.br.outputs.atisa_ref }}
-
+      # Build site image from your Dockerfile.site using the prebuilt deps image
       - name: Build site image
         uses: docker/build-push-action@v6
         with:
           context: .
           file: Dockerfile.site
-          platforms: linux/amd64
           push: false
           tags: pxt-site:ci
           build-args: |
-            DEPS_IMAGE=${{ env.REGISTRY }}/${{ steps.ns.outputs.image_ns }}/${{ steps.br.outputs.deps_tag }}
-            ATISA_REF=${{ steps.br.outputs.atisa_ref }}
+            DEPS_IMAGE=${{ env.REGISTRY }}/${{ steps.ns.outputs.image_ns }}/pxt-deps:main
+            ATISA_REF=${{ github.ref_name }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Extract /out/site to workspace
+      # Extract the static output from the image
+      - name: Copy /out/site
         run: |
           cid=$(docker create pxt-site:ci)
+          mkdir -p site
           docker cp "$cid":/out/site/. site/
           docker rm "$cid"
           ls -lah site || true
           ls -lah site/static || true
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: site-${{ github.ref_name }}
-          path: site
-
-  deploy_staging:
-    if: github.ref_name == 'staging'
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: staging
-    permissions:
-      pages: write
-      id-token: write
-    steps:
-      - name: Download site artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: site-staging
-          path: ./site
-
+      # Pages deploy (same steps for both branches)
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
@@ -125,44 +66,13 @@ jobs:
         with:
           path: ./site
 
-      - name: Deploy to GitHub Pages (staging preview)
-        id: deployment
+      - name: Deploy to GitHub Pages
+        id: deploy
         uses: actions/deploy-pages@v4
         with:
-          preview: true
+          # preview for any non-main branch (staging), production for main
+          preview: ${{ github.ref_name != 'main' }}
 
-      - name: Show preview URL
+      - name: Show URL
         run: |
-          echo "Preview URL: ${{ steps.deployment.outputs.page_url }}"
-
-  deploy_production:
-    if: github.ref_name == 'main'
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: production
-    permissions:
-      pages: write
-      id-token: write
-    steps:
-      - name: Download site artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: site-main
-          path: ./site
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./site
-
-      - name: Deploy to GitHub Pages (production)
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-      - name: Show production URL
-        run: |
-          echo "Production URL: ${{ steps.deployment.outputs.page_url }}"
+          echo "Pages URL: ${{ steps.deploy.outputs.page_url }}"
