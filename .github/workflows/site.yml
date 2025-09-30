@@ -44,8 +44,6 @@ jobs:
           build-args: |
             DEPS_IMAGE=${{ env.REGISTRY }}/${{ steps.ns.outputs.image_ns }}/pxt-deps:main
             ATISA_REF=${{ github.ref_name }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
       # Extract the static output from the image
       - name: Copy /out/site
