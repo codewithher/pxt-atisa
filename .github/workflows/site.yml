@@ -7,9 +7,9 @@ on:
 
 permissions:
   contents: read
-  packages: write # pull from GHCR with GITHUB_TOKEN
-  pages: write # deploy GitHub Pages
-  id-token: write # required by deploy-pages
+  packages: read   # only need to pull from GHCR
+  pages: write
+  id-token: write
 
 env:
   REGISTRY: ghcr.io
@@ -21,10 +21,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Lowercase repo path for GHCR (required)
-      - name: Compute namespace
+      # Lowercase owner/repo AND extract repo name for --route
+      - name: Compute names
         id: ns
-        run: echo "image_ns=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+        run: |
+          repo="${{ github.repository }}"
+          lower=$(echo "$repo" | tr '[:upper:]' '[:lower:]')
+          echo "image_ns=$lower" >> $GITHUB_OUTPUT
+          echo "repo_name=${repo#*/}" >> $GITHUB_OUTPUT
 
       - name: Login to GHCR
         uses: docker/login-action@v3
@@ -33,29 +37,34 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Build site image from your Dockerfile.site using the prebuilt deps image
-      - name: Build site image
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build site image (loads into local Docker)
         uses: docker/build-push-action@v6
         with:
           context: .
           file: Dockerfile.site
           push: false
+          load: true              # <-- ensures pxt-site:ci is local
           tags: pxt-site:ci
           build-args: |
             DEPS_IMAGE=${{ env.REGISTRY }}/${{ steps.ns.outputs.image_ns }}/pxt-deps:main
             ATISA_REF=${{ github.ref_name }}
+            ROUTE=${{ steps.ns.outputs.repo_name }}
 
-      # Extract the static output from the image
-      - name: Copy /out/site
+      - name: Extract /out/site from image
         run: |
           cid=$(docker create pxt-site:ci)
           mkdir -p site
           docker cp "$cid":/out/site/. site/
           docker rm "$cid"
+          # safety checks
+          touch site/.nojekyll
+          test -f site/index.html || (echo "index.html missing in site/"; ls -la site; exit 1)
           ls -lah site || true
           ls -lah site/static || true
 
-      # Pages deploy (same steps for both branches)
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
@@ -67,9 +76,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deploy
         uses: actions/deploy-pages@v4
-        with:
-          # preview for any non-main branch (staging), production for main
-          preview: ${{ github.ref_name != 'main' }}
 
       - name: Show URL
         run: |
