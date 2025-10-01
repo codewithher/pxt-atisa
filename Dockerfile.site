@@ -11,12 +11,9 @@ RUN cd pxt-atisa \
     && git checkout ${ATISA_REF} \
     && git pull --ff-only origin ${ATISA_REF}
 
-# --- NEW: route for GitHub Pages project path (/REPO_NAME/)
-ARG ROUTE=pxt-atisa
-
 # Build static package and assert output exists
 RUN cd pxt-atisa \
-    && pxt staticpkg --route ${ROUTE} \
+    && pxt staticpkg \
     && test -d built/packaged \
     && ls -lah built/packaged
 
@@ -27,9 +24,6 @@ RUN mkdir -p /out/site \
 # Merge docs/static into /out/site/static (copy contents, not the folder itself)
 RUN mkdir -p /out/site/static \
     && cp -R pxt-atisa/docs/static/. /out/site/static/
-
-# Helpful for GitHub Pages (avoid Jekyll munging underscored dirs)
-RUN touch /out/site/.nojekyll
 
 # Show what we produced by default
 CMD ["bash","-lc","ls -la /out/site && echo 'Output at /out/site'"]

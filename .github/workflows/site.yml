@@ -1,4 +1,4 @@
-name: Build & Deploy (staging/main)
+name: Build & Deploy
 
 on:
   push:
@@ -7,76 +7,64 @@ on:
 
 permissions:
   contents: read
-  packages: read   # only need to pull from GHCR
+  packages: read
   pages: write
   id-token: write
 
-env:
-  REGISTRY: ghcr.io
-
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Lowercase owner/repo AND extract repo name for --route
-      - name: Compute names
-        id: ns
-        run: |
-          repo="${{ github.repository }}"
-          lower=$(echo "$repo" | tr '[:upper:]' '[:lower:]')
-          echo "image_ns=$lower" >> $GITHUB_OUTPUT
-          echo "repo_name=${repo#*/}" >> $GITHUB_OUTPUT
-
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build site image (loads into local Docker)
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: Dockerfile.site
-          push: false
-          load: true              # <-- ensures pxt-site:ci is local
-          tags: pxt-site:ci
-          build-args: |
-            DEPS_IMAGE=${{ env.REGISTRY }}/${{ steps.ns.outputs.image_ns }}/pxt-deps:main
-            ATISA_REF=${{ github.ref_name }}
-            ROUTE=${{ steps.ns.outputs.repo_name }}
-
-      - name: Extract /out/site from image
+      - name: Build site image
         run: |
-          cid=$(docker create pxt-site:ci)
-          mkdir -p site
-          docker cp "$cid":/out/site/. site/
+          docker build \
+            -f Dockerfile.site \
+            --build-arg GIT_SHA=${{ github.sha }} \
+            -t site:${{ github.sha }} .
+
+      - name: Extract static site from image
+        run: |
+          cid=$(docker create site:${{ github.sha }})
+          # 🔧 Update /site if your build output lives elsewhere (e.g., /app/dist)
+          docker cp "$cid":/site ./_site
           docker rm "$cid"
-          # safety checks
-          touch site/.nojekyll
-          test -f site/index.html || (echo "index.html missing in site/"; ls -la site; exit 1)
-          ls -lah site || true
-          ls -lah site/static || true
+          test -d _site && ls -al _site
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload Pages artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./site
+          path: _site
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
       - name: Deploy to GitHub Pages
-        id: deploy
+        id: deployment
         uses: actions/deploy-pages@v4
 
       - name: Show URL
         run: |
-          echo "Pages URL: ${{ steps.deploy.outputs.page_url }}"
+          echo "Pages URL: ${{ steps.deployment.outputs.page_url }}"
