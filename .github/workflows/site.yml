@@ -11,6 +11,9 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  REGISTRY: ghcr.io
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,10 +21,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Compute namespace
+        id: ns
+        run: echo "image_ns=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -32,16 +39,18 @@ jobs:
         run: |
           docker build \
             -f Dockerfile.site \
-            --build-arg GIT_SHA=${{ github.sha }} \
-            -t site:${{ github.sha }} .
+            --build-arg DEPS_IMAGE=${{ env.REGISTRY }}/${{ steps.ns.outputs.image_ns }}/pxt-deps:main \
+            --build-arg ATISA_REF=staging \
+            -t pxt-site:staging .
 
       - name: Extract static site from image
         run: |
-          cid=$(docker create site:${{ github.sha }})
-          # 🔧 Update /site if your build output lives elsewhere (e.g., /app/dist)
-          docker cp "$cid":/site ./_site
+          mkdir -p ./site
+          cid=$(docker create pxt-site:staging)
+          docker cp "$cid":/out/site/. ./site/
           docker rm "$cid"
-          test -d _site && ls -al _site
+          ls -lah site || true
+          ls -lah site/static || true
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -49,22 +58,12 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: ./site
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    permissions:
-      pages: write
-      id-token: write
-    steps:
       - name: Deploy to GitHub Pages
-        id: deployment
+        id: deploy
         uses: actions/deploy-pages@v4
 
       - name: Show URL
         run: |
-          echo "Pages URL: ${{ steps.deployment.outputs.page_url }}"
+          echo "Pages URL: ${{ steps.deploy.outputs.page_url }}"
