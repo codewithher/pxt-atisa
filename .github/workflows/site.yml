@@ -6,7 +6,7 @@ on:
   workflow_dispatch: {}
 
 permissions:
-  contents: read
+  contents: write
   packages: read
   pages: write
   id-token: write
@@ -60,6 +60,13 @@ jobs:
         with:
           path: ./site
 
+      - name: Sanity check site
+        run: |
+          echo "Top level:"; ls -lah ./site
+          echo "Looking for index.html near the root:"
+          find ./site -maxdepth 2 -name index.html -print
+          test -f ./site/index.html || (echo "ERROR: ./site/index.html is missing"; exit 1)
+
       - name: Deploy to gh-pages branch
         if: ${{ success() }}
         uses: peaceiris/actions-gh-pages@v3
@@ -67,8 +74,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
           publish_branch: gh-pages
-          force_orphan: true
-
-      - name: Show URL
-        run: |
-          echo "Pages URL: ${{ steps.deploy.outputs.page_url }}"
