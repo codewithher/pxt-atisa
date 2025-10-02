@@ -12,9 +12,8 @@ RUN cd pxt-atisa \
     && git pull --ff-only origin ${ATISA_REF}
 
 # Build static package and assert output exists
-ARG ROUTE
 RUN cd pxt-atisa \
-    && pxt staticpkg --route "$ROUTE"\
+    && pxt staticpkg \
     && test -d built/packaged \
     && ls -lah built/packaged
 
@@ -24,7 +23,7 @@ RUN mkdir -p /out/site \
 
 # Merge docs/static into /out/site/static (copy contents, not the folder itself)
 RUN mkdir -p /out/site/static \
-    && cp -R pxt-atisa/docs/static/. /out/site/static/
+    && cp -R pxt-atisa/docs/static/* /out/site/static/
 
 # Show what we produced by default
 CMD ["bash","-lc","ls -la /out/site && echo 'Output at /out/site'"]

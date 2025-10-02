@@ -15,7 +15,7 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -41,14 +41,13 @@ jobs:
             -f Dockerfile.site \
             --build-arg DEPS_IMAGE=${{ env.REGISTRY }}/${{ steps.ns.outputs.image_ns }}/pxt-deps:main \
             --build-arg ATISA_REF=staging \
-            --build-arg ROUTE=${{ github.event.repository.name }} \
             -t pxt-site:staging .
 
       - name: Extract static site from image
         run: |
           mkdir -p ./site
           cid=$(docker create pxt-site:staging)
-          docker cp "$cid":/out/site/. ./site/. 
+          docker cp "$cid":/out/site/. ./site
           docker rm "$cid"
           ls -lah site || true
           ls -lah site/static || true
