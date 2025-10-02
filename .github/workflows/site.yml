@@ -41,7 +41,7 @@ jobs:
             -f Dockerfile.site \
             --build-arg DEPS_IMAGE=${{ env.REGISTRY }}/${{ steps.ns.outputs.image_ns }}/pxt-deps:main \
             --build-arg ATISA_REF=staging \
-                           --build-arg ROUTE=${{ github.event.repository.name }} \
+            --build-arg ROUTE=${{ github.event.repository.name }} \
             -t pxt-site:staging .
 
       - name: Extract static site from image

@@ -14,7 +14,7 @@ RUN cd pxt-atisa \
 # Build static package and assert output exists
 ARG ROUTE
 RUN cd pxt-atisa \
-    && pxt staticpkg --route "$ROUTE" --minify --out /out/site\
+    && pxt staticpkg --route "$ROUTE" --minify\
     && test -d built/packaged \
     && ls -lah built/packaged
 
