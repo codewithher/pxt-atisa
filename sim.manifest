@@ -1,9 +1,9 @@
 CACHE MANIFEST
 
 CACHE:
-/pxt-atisa/pxtsim.js
-/pxt-atisa/common-sim.js
-/pxt-atisa/sim.js
+/pxtsim.js
+/common-sim.js
+/sim.js
 
 NETWORK:
 *

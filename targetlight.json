@@ -30,8 +30,8 @@
         "partsAspectRatio": 0.69,
         "dynamicBoardDefinition": true,
         "defaultBoard": {
-            "name": "Adafruit Trinket M0",
-            "url": "libs/adafruit-trinket-m0",
+            "name": "Adafruit ItsyBitsy M0 Express",
+            "url": "libs/adafruit-itsybitsy-m0-express",
             "variant": "samd21"
         },
         "messageSimulators": {
@@ -339,7 +339,7 @@
         "config": {
             "name": "{0}",
             "dependencies": {
-                "adafruit-itsybitsy-m4-express": "*"
+                "adafruit-itsybitsy-m0-express": "*"
             },
             "description": "",
             "files": [
@@ -360,7 +360,7 @@
         "config": {
             "name": "{0}",
             "dependencies": {
-                "adafruit-itsybitsy-m4-express": "*"
+                "adafruit-itsybitsy-m0-express": "*"
             },
             "description": "",
             "files": [
@@ -441,18 +441,6 @@
                 "pxt-link": "#807FFF",
                 "pxt-link-hover": "#1b19ff",
                 "pxt-focus-border": "#FFFF00",
-                "pxt-success": "#00FF00",
-                "pxt-success-foreground": "#000000",
-                "pxt-success-hover": "#00FF00",
-                "pxt-success-alpha10": "#00FF0019",
-                "pxt-warning": "#00FFFF",
-                "pxt-warning-foreground": "#FFFFFF",
-                "pxt-warning-hover": "#00FFFF",
-                "pxt-warning-alpha10": "#00FFFF19",
-                "pxt-error": "#880000",
-                "pxt-error-foreground": "#FFFFFF",
-                "pxt-error-hover": "#880000",
-                "pxt-error-alpha10": "#88000019",
                 "pxt-colors-purple-background": "#FF00FF",
                 "pxt-colors-purple-foreground": "#000000",
                 "pxt-colors-purple-hover": "#FF00FF",

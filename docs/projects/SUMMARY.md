@@ -1,6 +1,5 @@
-<!-- This file is generated from pxtarget.json during "pxt serve". Do not edit. -->
-
 # Projects
+
 * [Parole](/projects/parole)
   * [ex1](/projects/parole/ex1)
   * [ex2](/projects/parole/ex2)
@@ -33,24 +32,7 @@
   * [ex5](/projects/kwanzaa/ex5)
   * [ex6](/projects/kwanzaa/ex6)
   * [ex7](/projects/kwanzaa/ex7)
-* [My Gallery](/projects/my-gallery)
-  * [Blinking LED](/projects/my-gallery/blinking)
-  * [Temperature Sensor](/projects/my-gallery/temp)
-  * [Servo Control](/projects/my-gallery/servo)
-* [Adafruit](/boards/adafruit)
-  * [Adafruit Metro M0 Express](/boards/adafruit-metro-m0-express)
-  * [Adafruit Feather M0 Express](/boards/adafruit-feather-m0-express)
+* [Adafruit Boards](/boards/adafruit)
   * [Adafruit ItsyBitsy M0 Express](/boards/adafruit-itsybitsy-m0-express)
   * [Adafruit Trinket M0](/boards/adafruit-trinket-m0)
-  * [Adafruit Gemma M0](/boards/adafruit-gemma-m0)
-  * [Adafruit Metro M4 Express](/boards/adafruit-metro-m4-express)
-  * [Adafruit Feather M4 Express](/boards/adafruit-feather-m4-express)
   * [Adafruit ItsyBitsy M4 Express](/boards/adafruit-itsybitsy-m4-express)
-  * [Adafruit Grand Central M4 Express ](/boards/adafruit-grand-central-m4-express)
-  * [Adafruit Feather Bluefruit NRF52840](/boards/adafruit-feather-nrf52840-express)
-  * [Adafruit ItsyBitsy NRF52840 Express](/boards/adafruit-itsybitsy-nrf52840-express)
-  * [Adafruit Circuit Playground Bluefruit](/boards/adafruit-circuit-playground-bluefruit)
-* [Analog IO](/projects/analog-io)
-  * [Blink to Light](/projects/analog-io/blink-to-light)
-  * [Glowy](/projects/analog-io/glowy)
-  * [Glow Light](/projects/analog-io/glow-light)

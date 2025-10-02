@@ -1,6 +1,7 @@
 {
     "accentColor": "#ecf0f1",
     "backgroundColor": "#ffffff",
+    "coloredToolbox": true,
     "logoUrl": "https://github.com/microsoft/pxt-maker",
     "logo": "docs/static/logo.svg",
     "docsLogo": "docs/static/logo.svg",

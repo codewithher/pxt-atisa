@@ -1,73 +1,73 @@
 CACHE MANIFEST
 
 CACHE:
-/pxt-atisa/semantic.js
-/pxt-atisa/main.js
-/pxt-atisa/pxtapp.js
-/pxt-atisa/typescript.js
-/pxt-atisa/marked/marked.min.js
-/pxt-atisa/highlight.js/highlight.pack.js
-/pxt-atisa/jquery.js
-/pxt-atisa/pxtlib.js
-/pxt-atisa/pxtcompiler.js
-/pxt-atisa/pxtpy.js
-/pxt-atisa/pxteditor.js
-/pxt-atisa/pxtsim.js
-/pxt-atisa/pxtembed.js
-/pxt-atisa/pxtworker.js
-/pxt-atisa/pxtweb.js
-/pxt-atisa/blockly.css
-/pxt-atisa/semantic.css
-/pxt-atisa/rtlsemantic.css
+/semantic.js
+/main.js
+/pxtapp.js
+/typescript.js
+/marked/marked.min.js
+/highlight.js/highlight.pack.js
+/jquery.js
+/pxtlib.js
+/pxtcompiler.js
+/pxtpy.js
+/pxteditor.js
+/pxtsim.js
+/pxtembed.js
+/pxtworker.js
+/pxtweb.js
+/blockly.css
+/semantic.css
+/rtlsemantic.css
 
 
 
 
 
 # blockly
-/pxt-atisa/blockly/media/sprites.png
-/pxt-atisa/blockly/media/click.mp3
-/pxt-atisa/blockly/media/disconnect.wav
-/pxt-atisa/blockly/media/delete.mp3
+/blockly/media/sprites.png
+/blockly/media/click.mp3
+/blockly/media/disconnect.wav
+/blockly/media/delete.mp3
 
 # monaco; keep in sync with webapp/public/index.html
-/pxt-atisa/vs/loader.js
-/pxt-atisa/vs/base/worker/workerMain.js
-/pxt-atisa/vs/basic-languages/bat/bat.js
-/pxt-atisa/vs/basic-languages/cpp/cpp.js
-/pxt-atisa/vs/basic-languages/python/python.js
-/pxt-atisa/vs/basic-languages/typescript/typescript.js
-/pxt-atisa/vs/basic-languages/markdown/markdown.js
-/pxt-atisa/vs/editor/editor.main.css
-/pxt-atisa/vs/editor/editor.main.js
-/pxt-atisa/vs/editor/editor.main.nls.js
-/pxt-atisa/vs/language/json/jsonMode.js
-/pxt-atisa/vs/language/json/jsonWorker.js
-/pxt-atisa/vs/language/typescript/tsMode.js
-/pxt-atisa/vs/language/typescript/tsWorker.js
+/vs/loader.js
+/vs/base/worker/workerMain.js
+/vs/basic-languages/bat/bat.js
+/vs/basic-languages/cpp/cpp.js
+/vs/basic-languages/python/python.js
+/vs/basic-languages/typescript/typescript.js
+/vs/basic-languages/markdown/markdown.js
+/vs/editor/editor.main.css
+/vs/editor/editor.main.js
+/vs/editor/editor.main.nls.js
+/vs/language/json/jsonMode.js
+/vs/language/json/jsonWorker.js
+/vs/language/typescript/tsMode.js
+/vs/language/typescript/tsWorker.js
 
 # charts
-/pxt-atisa/smoothie/smoothie_compressed.js
-/pxt-atisa/images/Bars_black.gif
+/smoothie/smoothie_compressed.js
+/images/Bars_black.gif
 
 # gifjs
-/pxt-atisa/gifjs/gif.js
+/gifjs/gif.js
 
 # ai
-/pxt-atisa/ai.0.js
+/ai.0.js
 
-/pxt-atisa/worker.js
-/pxt-atisa/monacoworker.js
+/worker.js
+/monacoworker.js
 
-# ver Mon Sep 15 2025 17:32:02 GMT-0700 (Pacific Daylight Time)
+# ver Thu Oct 02 2025 16:16:39 GMT+0000 (Coordinated Universal Time)
 
 # target
-/pxt-atisa/docs/static/logo.svg
-/pxt-atisa/docs/static/Microsoft-logo_rgb_c-gray-square.png
-/pxt-atisa/docs/static/Microsoft-logo_rgb_c-gray.png
-/pxt-atisa/docs/static/herogallery/placeholder1.png
+/docs/static/logo.svg
+/docs/static/Microsoft-logo_rgb_c-gray-square.png
+/docs/static/Microsoft-logo_rgb_c-gray.png
+/docs/static/herogallery/placeholder1.png
 
-/pxt-atisa/target.js
+/target.js
 
 NETWORK:
 *
