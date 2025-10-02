@@ -52,20 +52,6 @@ jobs:
           ls -lah site || true
           ls -lah site/static || true
 
-      # 1) Make sure Pages does not hide underscore folders
-      - name: Add .nojekyll
-        run: echo > site/.nojekyll
-
-      # 2) Rewrite absolute-root asset URLs to the project base (/pxt-atisa/)
-      - name: Prefix absolute asset URLs with project path
-        run: |
-          BASE="/${{ github.event.repository.name }}/"
-          # Prefix href="/..." and src="/..." unless already /pxt-atisa/...
-          perl -0777 -pe "s/(href|src)=\"\/(?!${{ github.event.repository.name }}\/)/\1=\"${BASE}/g" -i site/index.html
-          # Also fix <link rel="manifest" href="/...">
-          perl -0777 -pe "s/(rel=\"manifest\"[^>]*href)=\"\/(?!${{ github.event.repository.name }}\/)/\1=\"${BASE}/g" -i site/index.html
-
-
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
@@ -82,7 +68,6 @@ jobs:
           test -f ./site/index.html || (echo "ERROR: ./site/index.html is missing"; exit 1)
 
       - name: Deploy to gh-pages branch
-        if: ${{ success() }}
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

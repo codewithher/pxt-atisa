@@ -11,19 +11,32 @@ RUN cd pxt-atisa \
     && git checkout ${ATISA_REF} \
     && git pull --ff-only origin ${ATISA_REF}
 
-# Build static package and assert output exists
+# Build for GitHub Pages (this implies route=<repo-name>)
 RUN cd pxt-atisa \
-    && pxt staticpkg \
-    && test -d built/packaged \
-    && ls -lah built/packaged
+    && pxt staticpkg --githubpages \
+    && test -d built
 
-# Collect artifacts
-RUN mkdir -p /out/site \
-    && cp -R pxt-atisa/built/packaged/* /out/site/
+# Collect artifacts to /out/site (handle both possible layouts)
+RUN set -eux; \
+    mkdir -p /out/site; \
+    if [ -d pxt-atisa/built/gh-pages ]; then \
+    cp -R pxt-atisa/built/gh-pages/. /out/site/; \
+    elif [ -d pxt-atisa/built/packaged/pxt-atisa ]; then \
+    cp -R pxt-atisa/built/packaged/pxt-atisa/. /out/site/; \
+    elif [ -f pxt-atisa/built/packaged/index.html ]; then \
+    cp -R pxt-atisa/built/packaged/. /out/site/; \
+    else \
+    echo "Could not find index.html produced by staticpkg"; \
+    find pxt-atisa/built -maxdepth 3 -name index.html -print; \
+    exit 1; \
+    fi
 
 # Merge docs/static into /out/site/static (copy contents, not the folder itself)
 RUN mkdir -p /out/site/static \
-    && cp -R pxt-atisa/docs/static/* /out/site/static/
+    && cp -R /out/site/docs/static/. /out/site/static/
+
+# Ensure GitHub Pages does not hide underscore folders
+RUN touch /out/site/.nojekyll
 
 # Show what we produced by default
 CMD ["bash","-lc","ls -la /out/site && echo 'Output at /out/site'"]
