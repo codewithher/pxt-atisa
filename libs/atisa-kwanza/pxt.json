@@ -1,6 +1,6 @@
 {
-    "name": "adafruit-circuit-playground-express",
-    "description": "The Adafruit Circuit Playground Express library - beta",
+    "name": "atisa-kwanza",
+    "description": "The Atisa Kinara",
     "files": [
         "README.md",
         "device.d.ts",

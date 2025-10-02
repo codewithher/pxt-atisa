@@ -1,0 +1,274 @@
+{
+  "driveDisplayName": "",
+  "visual": {
+    "image": "pkg://board.svg",
+    "useCrocClips": true,
+    "width": 835,
+    "height": 1029,
+    "pinDist": 15,
+    "pinBlocks": [
+    ],
+    "leds": [
+      {
+        "x": 411.41,
+        "y": 62,
+        "color": "#ff0000",
+        "label": "LED"
+      },
+      {
+        "x": 411.41,
+        "y": 60,
+        "color": "neopixel",
+        "label": "NEOPIXEL0"
+      },
+      {
+        "x": 138.88,
+        "y": 129,
+        "color": "neopixel",
+        "label": "NEOPIXEL1"
+      },
+      {
+        "x": 239.81,
+        "y": 129,
+        "color": "neopixel",
+        "label": "NEOPIXEL2"
+      },
+      {
+        "x": 340.75,
+        "y": 129,
+        "color": "neopixel",
+        "label": "NEOPIXEL3"
+      },
+      {
+        "x": 487.16,
+        "y": 129,
+        "color": "neopixel",
+        "label": "NEOPIXEL4"
+      },
+      {
+        "x": 588.09,
+        "y": 129,
+        "color": "neopixel",
+        "label": "NEOPIXEL5"
+      },
+      {
+        "x": 689.03,
+        "y": 129,
+        "color": "neopixel",
+        "label": "NEOPIXEL6"
+      },
+      {
+        "x": 405.41,
+        "y": 215,
+        "color": "neopixel",
+        "label": "NEOPIXEL7"
+      },
+      {
+        "x": 139.88,
+        "y": 307,
+        "color": "neopixel",
+        "label": "NEOPIXEL8"
+      },
+      {
+        "x": 240.81,
+        "y": 307,
+        "color": "neopixel",
+        "label": "NEOPIXEL9"
+      },
+      {
+        "x": 341.75,
+        "y": 307,
+        "color": "neopixel",
+        "label": "NEOPIXEL10"
+      },
+      {
+        "x": 488.16,
+        "y": 307,
+        "color": "neopixel",
+        "label": "NEOPIXEL11"
+      },
+      {
+        "x": 589.09,
+        "y": 307,
+        "color": "neopixel",
+        "label": "NEOPIXEL12"
+      },
+      {
+        "x": 690.03,
+        "y": 307,
+        "color": "neopixel",
+        "label": "NEOPIXEL13"
+      },
+      {
+        "x": 68.88,
+        "y": 407,
+        "color": "neopixel",
+        "label": "NEOPIXEL14"
+      },
+      {
+        "x": 280.88,
+        "y": 425,
+        "color": "neopixel",
+        "label": "NEOPIXEL15"
+      },
+      {
+        "x": 553.88,
+        "y": 425,
+        "color": "neopixel",
+        "label": "NEOPIXEL16"
+      },
+      {
+        "x": 756.88,
+        "y": 407,
+        "color": "neopixel",
+        "label": "NEOPIXEL17"
+      },
+      {
+        "x": 173.88,
+        "y": 516,
+        "color": "neopixel",
+        "label": "NEOPIXEL18"
+      },
+      {
+        "x": 423.88,
+        "y": 525,
+        "color": "neopixel",
+        "label": "NEOPIXEL19"
+      },
+      {
+        "x": 649.88,
+        "y": 516,
+        "color": "neopixel",
+        "label": "NEOPIXEL20"
+      },
+      {
+        "x": 173.88,
+        "y": 654,
+        "color": "neopixel",
+        "label": "NEOPIXEL21"
+      },
+      {
+        "x": 247.88,
+        "y": 654,
+        "color": "neopixel",
+        "label": "NEOPIXEL22"
+      },
+      {
+        "x": 575.88,
+        "y": 654,
+        "color": "neopixel",
+        "label": "NEOPIXEL23"
+      },
+      {
+        "x": 649.88,
+        "y": 654,
+        "color": "neopixel",
+        "label": "NEOPIXEL24"
+      }
+    ]
+  },
+  "gpioPinMap": {
+    "EN": "EN",
+    "SWDIO": "SWDIO",
+    "SWCLK": "SWCLK",
+    "D3": "D3",
+    "D4": "D4",
+    "VBAT": "VBAT",
+    "GND": "GND",
+    "VBUS": "VBUS",
+    "D13": "D13",
+    "D12": "D12",
+    "D11": "D11",
+    "D10": "D10",
+    "D9": "D9",
+    "D7": "D7",
+    "D5_5V": "D5_5V",
+    "D5": "D5_5V",
+    "SCL": "SCL",
+    "SDA": "SDA",
+    "TX_D1": "TX_D1",
+    "D1": "TX_D1",
+    "RX_D0": "RX_D0",
+    "D0": "RX_D0",
+    "D2": "D2",
+    "MISO": "MISO",
+    "MOSI": "MOSI",
+    "SCK": "SCK",
+    "A5": "A5",
+    "A4": "A4",
+    "A3": "A3",
+    "JACK_TX": "TX_D1",
+    "A2": "A2",
+    "A1": "A1",
+    "A0": "A0",
+    "VHI": "VHI",
+    "AREF": "AREF",
+    "+3V3": "+3V3",
+    "!RESET": "!RESET",
+    "LED": "LED",
+    "NEOPIXEL6": "NEOPIXEL6",
+    "NEOPIXEL5": "NEOPIXEL5",
+    "NEOPIXEL7": "NEOPIXEL7",
+    "NEOPIXEL8": "NEOPIXEL8",
+    "NEOPIXEL9": "NEOPIXEL9",
+    "NEOPIXEL0": "NEOPIXEL0",
+    "NEOPIXEL1": "NEOPIXEL1",
+    "NEOPIXEL2": "NEOPIXEL2",
+    "NEOPIXEL3": "NEOPIXEL3",
+    "NEOPIXEL4": "NEOPIXEL4",
+    "NEOPIXEL10": "NEOPIXEL10",
+    "NEOPIXEL11": "NEOPIXEL11",
+    "NEOPIXEL12": "NEOPIXEL12",
+    "NEOPIXEL13": "NEOPIXEL13",
+    "NEOPIXEL14": "NEOPIXEL14",
+    "NEOPIXEL15": "NEOPIXEL15",
+    "NEOPIXEL16": "NEOPIXEL16",
+    "NEOPIXEL17": "NEOPIXEL17",
+    "NEOPIXEL18": "NEOPIXEL18",
+    "NEOPIXEL19": "NEOPIXEL19",
+    "NEOPIXEL20": "NEOPIXEL20",
+    "NEOPIXEL21": "NEOPIXEL21",
+    "NEOPIXEL22": "NEOPIXEL22",
+    "NEOPIXEL23": "NEOPIXEL23",
+    "NEOPIXEL24": "NEOPIXEL24",
+    "DISPLAY_CS": "A2",
+    "DISPLAY_SCK": "SCK",
+    "DISPLAY_MOSI": "MOSI",
+    "DISPLAY_DC": "A5",
+    "DISPLAY_RST": "A4",
+    "DISPLAY_MISO": "MISO",
+    "ACCELEROMETER_INT": "D2"
+  },
+  "groundPins": [
+    "GND"
+  ],
+  "threeVoltPins": [
+    "+3V3"
+  ],
+    "spiPins": {
+    "MOSI": "MOSI",
+    "MISO": "MISO",
+    "SCK": "SCK"
+  },
+  "i2cPins": {
+    "SDA": "SDA",
+    "SCL": "SCL"
+  },
+  "onboardComponents": [
+    "thermometer",
+    "lightsensor",
+    "microphone",
+    "accelerometer",
+    "neopixel",
+    "pixels",
+    "headphone",
+    "switch",
+    "ir"
+  ],
+  "marginWhenBreadboarding": [
+    0,
+    0,
+    80,
+    0
+  ]
+}
