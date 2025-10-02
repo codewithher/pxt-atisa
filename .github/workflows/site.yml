@@ -1,4 +1,5 @@
-name: Build & Deploy
+# .github/workflows/publish.yml
+name: Build & Publish (PXT → gh-pages)
 
 on:
   push:
@@ -6,24 +7,22 @@ on:
   workflow_dispatch: {}
 
 permissions:
-  contents: write
-  packages: read
-  pages: write
-  id-token: write
+  contents: write   # needed to push to gh-pages
+  packages: read    # pull GHCR deps image
 
 env:
   REGISTRY: ghcr.io
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Compute namespace
+      - name: Compute GHCR namespace
         id: ns
-        run: echo "image_ns=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+        run: echo "image_ns=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
 
       - name: Login to GHCR
         uses: docker/login-action@v3
@@ -32,44 +31,45 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build site image
+      - name: Build & publish with deps image (PXT pushes)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          docker build \
-            -f Dockerfile.site \
-            --build-arg DEPS_IMAGE=${{ env.REGISTRY }}/${{ steps.ns.outputs.image_ns }}/pxt-deps:main \
-            --build-arg ATISA_REF=staging \
-            -t pxt-site:staging .
+          set -euo pipefail
 
-      - name: Extract static site from image
-        run: |
-          mkdir -p ./site
-          cid=$(docker create pxt-site:staging)
-          docker cp "$cid":/out/site/. ./site
-          docker rm "$cid"
-          ls -lah site || true
-          ls -lah site/static || true
+          # Use the deps toolchain in a container, but operate on THIS repo via bind mount
+          docker run --rm \
+            -e GITHUB_TOKEN \
+            -e GITHUB_REPOSITORY="${GITHUB_REPOSITORY}" \
+            -v "$PWD:/work" -w /work/pxt-atisa \
+            ${{ env.REGISTRY }}/${{ steps.ns.outputs.image_ns }}/pxt-deps:main \
+            bash -lc '
+              set -euo pipefail
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
+              # Build from the branch that triggered this workflow
+              git fetch origin
+              git checkout "${{ github.ref_name }}"
+              git pull --ff-only origin "${{ github.ref_name }}"
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./site
+              # Configure git so PXT can commit/push gh-pages
+              git config user.name  "github-actions[bot]"
+              git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+              git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
-      - name: Sanity check site
-        run: |
-          echo "Top level:"; ls -lah ./site
-          echo "Looking for index.html near the root:"
-          find ./site -maxdepth 2 -name index.html -print
-          test -f ./site/index.html || (echo "ERROR: ./site/index.html is missing"; exit 1)
+              # 1) Build for GitHub Pages (creates/updates ./gh-pages worktree)
+              pxt staticpkg --githubpages
 
-      - name: Deploy to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
-          publish_branch: gh-pages
+              # 2) Merge docs/static into the published /static (include dotfiles)
+              mkdir -p ../gh-pages/static
+              cp -R docs/static/. ../gh-pages/static/
+
+              # 3) Commit & push the added static files
+              git -C ../gh-pages add .
+              # Do not fail if nothing changed
+              git -C ../gh-pages commit -m "Add/refresh docs/static assets" || true
+              git -C ../gh-pages push origin gh-pages
+            '
+
+      # Optional: print the site URL
+      - name: Show URL
+        run: echo "https://$(echo '${{ github.repository_owner }}' | tr A-Z a-z).github.io/${{ github.event.repository.name }}/"
