@@ -12,8 +12,9 @@ RUN cd pxt-atisa \
     && git pull --ff-only origin ${ATISA_REF}
 
 # Build static package and assert output exists
+ARG ROUTE
 RUN cd pxt-atisa \
-    && pxt staticpkg \
+    && pxt staticpkg --route "$ROUTE" --minify --out /out/site\
     && test -d built/packaged \
     && ls -lah built/packaged
 
