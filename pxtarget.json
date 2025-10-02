@@ -81,6 +81,7 @@
         "libs/adafruit-itsybitsy-nrf52840-express",
         "libs/adafruit-neotrellis-m4-express",
         "libs/adafruit-gemma-m0",
+        "libs/atisa-kwanza",
         "libs/robotics-masters-robohatmm1-m4",
         "libs/adafruit-grand-central-m4-express",
         "libs/xinabox-cc03",

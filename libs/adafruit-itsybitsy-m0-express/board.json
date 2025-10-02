@@ -3,8 +3,8 @@
   "visual": {
     "image": "pkg://board.svg",
     "useCrocClips": false,
-    "width": 343,
-    "height": 172,
+    "width": 835,
+    "height": 1029,
     "pinDist": 15,
     "pinBlocks": [
       {
@@ -141,8 +141,8 @@
         ]
       },
       {
-        "x": 323.7772916149201,
-        "y": 152.81625366210938,
+        "x": 625.5,
+        "y": 1000,
         "labels": [
           "D2"
         ]
@@ -248,16 +248,28 @@
     ],
     "leds": [
       {
-        "x": 307.5827003527365,
-        "y": 39.02787780761717,
+        "x": 411.41,
+        "y": 62,
         "color": "#ff0000",
         "label": "LED"
       },
       {
-        "x": 100,
-        "y": 100,
+        "x": 158.88,
+        "y": 129,
+        "color": "#ff0000",
+        "label": "LED"
+      },
+      {
+        "x": 411.41,
+        "y": 60,
         "color": "neopixel",
-        "label": "NEOPIXEL"
+        "label": "NEOPIXEL0"
+      },
+      {
+        "x": 138.88,
+        "y": 129,
+        "color": "neopixel",
+        "label": "NEOPIXEL1"
       }
     ]
   },
@@ -300,6 +312,8 @@
     "+3V3": "+3V3",
     "!RESET": "!RESET",
     "LED": "LED",
+    "NEOPIXEL0": "NEOPIXEL0",
+    "NEOPIXEL1": "NEOPIXEL1",
     "DISPLAY_CS": "A2",
     "DISPLAY_SCK": "SCK",
     "DISPLAY_MOSI": "MOSI",
@@ -324,6 +338,7 @@
     "SCL": "SCL"
   },
   "onboardComponents": [
+    "neopixel",
     "pixel"
   ],
   "marginWhenBreadboarding": [

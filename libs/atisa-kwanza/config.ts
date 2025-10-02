@@ -1,7 +1,9 @@
 namespace config {
     export const PIN_NEOPIXEL = DAL.PB23;
-    export const NUM_NEOPIXELS = 10;
+    export const NUM_NEOPIXELS = 25;
     export const DEFAULT_BUTTON_MODE = DAL.BUTTON_ACTIVE_HIGH_PULL_DOWN;
+
+    export const PIN_D9 = DAL.PA07;
 
     export const PIN_FLASH_MISO = DAL.PA16;
     export const PIN_FLASH_MOSI = DAL.PA20;
@@ -41,7 +43,7 @@ namespace config {
 
     export const PIN_D4 = DAL.PA28;
     export const PIN_D5 = DAL.PA14;
-    export const PIN_D7 = DAL.PA15;
+    export const PIN_D7 = DAL.PA21;
     export const PIN_D8 = DAL.PB23;
     export const PIN_D13 = DAL.PA17;
     export const PIN_LED = PIN_D13;
@@ -52,4 +54,11 @@ namespace config {
 
     export const PIN_JACK_TX = PIN_TX; // TX
     export const PIN_JACK_COMMLED = PIN_LED; // LED
+
+    // export const PIN_DISPLAY_BL = PIN_D4; plugged to power
+    export const DISPLAY_CFG0 = 0x00000090;
+    export const DISPLAY_CFG1 = 0x000e14ff;
+    export const DISPLAY_CFG2 = 24;
+    export const DISPLAY_WIDTH = 160;
+    export const DISPLAY_HEIGHT = 128;
 }
