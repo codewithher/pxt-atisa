@@ -46,6 +46,11 @@ jobs:
             bash -lc '
               set -euo pipefail
 
+              # 🔐 make the mounted repo + worktrees safe for this Git
+              git config --global --add safe.directory /work
+              git config --global --add safe.directory /work/pxt-atisa
+              git config --global --add safe.directory /work/gh-pages || true
+
               # Build from the branch that triggered this workflow
               git fetch origin
               git checkout "${{ github.ref_name }}"
