@@ -36,5 +36,6 @@ RUN echo "=== Final site structure ===" \
     && ls -lah /out/site \
     && echo "=== /out/site/static ===" \
     && ls -lah /out/site/static || echo "No static directory"
+    
 # Show what we produced by default
 CMD ["bash","-lc","ls -la /out/site && echo 'Output at /out/site'"]
