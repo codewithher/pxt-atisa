@@ -19,13 +19,22 @@ RUN cd pxt-atisa \
     && test -d built/packaged \
     && ls -lah built/packaged
 
-# Collect artifacts
+# Extract files from the nested pxt-atisa directory to the root
 RUN mkdir -p /out/site \
-    && cp -R pxt-atisa/built/packaged/. /out/site/
+    && if [ -d "pxt-atisa/built/packaged/${REPO_NAME}" ]; then \
+    cp -R pxt-atisa/built/packaged/${REPO_NAME}/. /out/site/; \
+    else \
+    cp -R pxt-atisa/built/packaged/. /out/site/; \
+    fi
 
 # Merge docs/static into /out/site/static (copy contents, not the folder itself)
 RUN mkdir -p /out/site/static \
-    && cp -R pxt-atisa/docs/static/. /out/site/static/
+    && cp -R /out/site/docs/static/. /out/site/static/
 
+# Debug: Show the final structure
+RUN echo "=== Final site structure ===" \
+    && ls -lah /out/site \
+    && echo "=== /out/site/static ===" \
+    && ls -lah /out/site/static || echo "No static directory"
 # Show what we produced by default
 CMD ["bash","-lc","ls -la /out/site && echo 'Output at /out/site'"]
